@@ -6,6 +6,7 @@ import {
   Form,
   FormControl,
   Button,
+  InputGroup,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,21 +22,24 @@ export default class Navigation extends Component {
               MOVIEBOX
             </Link>
           </Navbar.Brand>
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
-          </Form>
+          <InputGroup className="w-50">
+            <FormControl
+              placeholder="Search Movie..."
+              aria-label="Search Movie..."
+              aria-describedby="basic-addon2"
+            />
+            <InputGroup.Append>
+              <Button variant="outline-secondary">Search</Button>
+            </InputGroup.Append>
+          </InputGroup>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
               <Link to="/" className="nav-link">
-                Home
+                Sign In
               </Link>
               <Link to="/about" className="nav-link">
-                About
-              </Link>
-              <Link to="/contact" className="nav-link">
-                Contact
+                Login
               </Link>
             </Nav>
           </Navbar.Collapse>
