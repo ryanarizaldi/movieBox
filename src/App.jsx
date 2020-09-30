@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import Detail from "./pages/Detail";
 import Navbar from "./components/Navigation";
 import Footer from "./components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,7 +13,8 @@ export default class App extends Component {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/" component={Home} />
+          <Route exact path="/" component={Home} />
+          <Route path="/detail" component={Detail} />
         </Switch>
         <Footer />
       </Router>
