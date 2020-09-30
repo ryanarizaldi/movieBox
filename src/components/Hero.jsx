@@ -7,6 +7,7 @@ import {
   Row,
   Col,
   Card,
+  Pagination,
 } from "react-bootstrap";
 import dp from "../assets/img/hero1.jpg";
 import dp1 from "../assets/img/hero.jpg";
@@ -34,23 +35,12 @@ export default class Hero extends Component {
         <Carousel>
           <Carousel.Item>
             <img className="d-block w-100 h-50" src={dp} alt="First slide" />
-            <Carousel.Caption>
-              <h3>First slide label</h3>
-            </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
             <img className="d-block w-100 h-50" src={dp1} alt="Third slide" />
-
-            <Carousel.Caption>
-              <h3>Second slide label</h3>
-            </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
             <img className="d-block w-100 h-50" src={dp2} alt="Third slide" />
-
-            <Carousel.Caption>
-              <h3>Third slide label</h3>
-            </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
         <Container>
@@ -93,6 +83,20 @@ export default class Hero extends Component {
               )}
             </Row>
           </div>
+          <Row>
+            <Pagination>
+              <Pagination.First />
+              <Pagination.Prev />
+              <Pagination.Item active>{1}</Pagination.Item>
+              <Pagination.Item>{2}</Pagination.Item>
+              <Pagination.Item>{3}</Pagination.Item>
+              <Pagination.Ellipsis />
+              <Pagination.Item>{14}</Pagination.Item>
+              <Pagination.Ellipsis />
+              <Pagination.Next />
+              <Pagination.Last />
+            </Pagination>
+          </Row>
         </Container>
       </>
     );

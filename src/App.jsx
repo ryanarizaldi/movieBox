@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navigation";
 import Footer from "./components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 export default class App extends Component {
   render() {

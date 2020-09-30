@@ -3,8 +3,8 @@ import React, { Component } from "react";
 export default class Footer extends Component {
   render() {
     return (
-      <div>
-        <div>ini footer</div>
+      <div className="footer">
+        <h1>Ini Footer</h1>
       </div>
     );
   }

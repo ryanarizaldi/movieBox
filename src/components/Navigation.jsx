@@ -36,7 +36,7 @@ export default class Navigation extends Component {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
               <Link to="/" className="nav-link">
-                Sign In
+                Sign Up
               </Link>
               <Link to="/about" className="nav-link">
                 Login

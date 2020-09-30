@@ -1,3 +1,54 @@
-.carousel {
-  height: 50% !important;
+.navbar {
+  background: #463F3A;
+  height: 80px;
+}
+
+.navbar-brand a {
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  padding-right: 170px;
+  font-size: 1.5em;
+}
+
+.navbar-nav a {
+  color: white !important;
+}
+
+.navbar .w-50 {
+  width: 35% !important;
+}
+
+.navbar .input-group-append {
+  background: #8A817C;
+  border-radius: 0 5px 5px 0;
+}
+
+.navbar .input-group-append .btn {
+  color: white;
+}
+
+/* .carousel {
+  height: 500px;
+} */
+
+.carousel img {
+  height: 800px !important;
+}
+
+.carousel-indicators {
+  padding-bottom: 150px;
+}
+
+.footer {
+  /* position: relative; */
+  margin-top: 200px;
+  height: 200px;
+  left: 0px;
+  right: 0;
+  bottom: 0px;
+  background: #252525;
+  padding: 67.4px 568px 24.47px 568px;
+  color: white;
+  text-align: center;
 }
