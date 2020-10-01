@@ -1,3 +1,4 @@
+/* navbar */
 .navbar {
   background: #463F3A;
   height: 80px;
@@ -35,6 +36,7 @@
   color: white;
 }
 
+/* carousel */
 /* .carousel {
   height: 500px;
 } */
@@ -47,6 +49,7 @@
   padding-bottom: 150px;
 }
 
+/* footer */
 .footer {
   /* position: relative; */
   margin-top: 200px;
@@ -59,3 +62,103 @@
   color: white;
   text-align: center;
 }
+
+/* card */
+.card {
+  min-height: 550px;
+  width: 100%;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+.card-img-top {
+  height: 400px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-title {
+  margin: 0 auto;
+}
+
+/* button show by */
+.show-by h1 {
+  margin-top: 30px;
+}
+
+.show-by .btn {
+  background: #48CAE4;
+  margin-right: 12px;
+  margin-top: 24px;
+  margin-bottom: 48px;
+}
+
+/* pagination */
+#page {
+  display: flex;
+  justify-content: center;
+  margin-top: 72px;
+}
+
+/* nav login signup */
+.ml-auto .btn {
+  background: #3A3430;
+}
+
+.ml-auto .btn:hover {
+  background: aliceblue;
+}
+
+.navbar-collapse .collapse .show {
+  z-index: 1000;
+}
+
+/* footer */
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 400px;
+  margin: 0;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  /* position: relative;
+  right: 200px; */
+  width: 700px;
+  padding-left: 100px;
+  padding-right: 100px;
+  text-align: left;
+  margin: 0;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
+  text-align: left;
+  padding-right: 24px;
+}
+
+.images {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
+  text-align: left;
+}
+
+.images .img {
+  width: 100px;
+  height: 100px;
+}
+

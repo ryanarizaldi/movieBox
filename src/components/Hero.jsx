@@ -46,9 +46,9 @@ export default class Hero extends Component {
         <Container>
           <div className="show-by">
             <h1>Show by Genre</h1>
-            <Button>Sci-fi</Button>
+            <Button active>Sci-fi</Button>
             <Button>Drama</Button>
-            <Button>Coemdy</Button>
+            <Button>Comedy</Button>
             <Button>Horor</Button>
             <Button>Romance</Button>
             <Button>Action</Button>
@@ -61,7 +61,7 @@ export default class Hero extends Component {
                   <Col md="3">
                     <Card>
                       <Card.Img
-                        variant="top"
+                        variant="top" 
                         src={"http://image.tmdb.org/t/p/w500" + mov.poster_path}
                       />
                       <Card.Body>
@@ -83,7 +83,7 @@ export default class Hero extends Component {
               )}
             </Row>
           </div>
-          <Row>
+          <Row id="page">
             <Pagination>
               <Pagination.First />
               <Pagination.Prev />
