@@ -15,11 +15,52 @@ import axios from "axios";
 
 export default class Navigation extends Component {
   state = {
+    dataLoggedIn: {},
     showLogin: false,
     showSign: false,
     emailLogin: "",
     passLogin: "",
+    emaiSign: "",
+    passSign: "",
+    fullName: "",
     token: localStorage.getItem("login"),
+  };
+
+  componentDidMount = () => {
+    const { token } = this.state;
+
+    if (token) {
+      this.getCurrentUser();
+    }
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const { token } = this.state;
+
+    if (token !== prevState.token) {
+      if (token) {
+        this.getCurrentUser();
+      }
+    }
+  };
+  getCurrentUser = async () => {
+    try {
+      const { token } = this.state;
+      // console.log("token", token);
+
+      const fetch = await axios.get("http://appdoto.herokuapp.com/api/user", {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      console.log("fetch", fetch);
+      this.setState({
+        dataLoggedIn: fetch.data.data,
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   onChange = (name, e) => {
@@ -33,24 +74,80 @@ export default class Navigation extends Component {
     e.preventDefault();
     try {
       const { emailLogin, passLogin } = this.state;
-      console.log(emailLogin, passLogin);
+      // console.log(emailLogin, passLogin);
       const submit = await axios.post(
         "http://appdoto.herokuapp.com/api/users/login",
         {
-          emailLogin,
-          passLogin,
+          email: emailLogin,
+          password: passLogin,
         }
       );
-
       localStorage.setItem("login", submit.data.data.token);
-      this.props.onChange("login", submit.data.data.token);
-      this.props.onClose();
-
+      this.onChange("token", submit.data.data.token);
+      this.handleCloseLogin();
       console.log("submit", submit);
     } catch (error) {
       console.log("error", error);
     }
   };
+
+  signUp = async (e) => {
+    console.log("masukgan");
+    e.preventDefault();
+    try {
+      const { fullName, emailSign, passSign } = this.state;
+      const submit = await axios.post(
+        "http://appdoto.herokuapp.com/api/users/",
+        {
+          email: emailSign,
+          password: passSign,
+          username: fullName,
+          fullname: fullName,
+          bio: "itulah bionya",
+        }
+      );
+      localStorage.setItem("login", submit.data.data.token);
+      this.onChange("token", submit.data.data.token);
+      console.log(submit);
+
+      this.handleCloseSign();
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  logout = () => {
+    localStorage.clear();
+    this.setState({
+      emailLogin: "",
+      passLogin: "",
+      token: null,
+    });
+  };
+
+  // login = (e) => {
+  //   e.preventDefault();
+
+  //   const { emailLogin, passLogin } = this.state;
+  //   // console.log(JSON.stringify(emailLogin, passLogin));
+  //   fetch("http://appdoto.herokuapp.com/api/users/login", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       email: emailLogin,
+  //       password: passLogin,
+  //     }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       console.log("Success:", result);
+  //       localStorage.setItem("token", result.data.token);
+  //       localStorage.setItem("isLogin", true);
+  //     });
+  //   this.props.onClose();
+  // };
 
   launchModalLogin = () => {
     this.setState({ showLogin: true });
@@ -69,7 +166,15 @@ export default class Navigation extends Component {
   };
 
   render() {
-    const { emailLogin, passLogin } = this.state;
+    const {
+      emailLogin,
+      passLogin,
+      token,
+      passSign,
+      emailSign,
+      fullName,
+    } = this.state;
+    const { username } = this.state.dataLoggedIn;
     return (
       <>
         <Navbar expand="lg" className="navbar">
@@ -93,12 +198,23 @@ export default class Navigation extends Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="ml-auto">
-                <Button onClick={this.launchModalSign} variant="light">
-                  Sign Up
-                </Button>
-                <Button onClick={this.launchModalLogin} variant="light">
-                  Login
-                </Button>
+                {token ? (
+                  <>
+                    <Button>Hello {username}</Button>
+                    <Button onClick={this.logout} variant="light">
+                      logout
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button onClick={this.launchModalSign} variant="light">
+                      Sign Up
+                    </Button>
+                    <Button onClick={this.launchModalLogin} variant="light">
+                      Login
+                    </Button>
+                  </>
+                )}
               </Nav>
             </Navbar.Collapse>
           </Container>
@@ -116,22 +232,37 @@ export default class Navigation extends Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form>
+            <Form onSubmit={this.signUp}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Full Name</Form.Label>
                 <Form.Control
                   type="fullName"
                   placeholder="Enter your Fullname"
+                  name="fullName"
+                  value={fullName}
+                  onChange={(e) => this.onChange(e.target.name, e.target.value)}
                 />
               </Form.Group>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  name="emailSign"
+                  value={emailSign}
+                  onChange={(e) => this.onChange(e.target.name, e.target.value)}
+                />
               </Form.Group>
 
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  name="passSign"
+                  value={passSign}
+                  onChange={(e) => this.onChange(e.target.name, e.target.value)}
+                />
               </Form.Group>
 
               <Button variant="primary" type="submit">
@@ -139,9 +270,6 @@ export default class Navigation extends Component {
               </Button>
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.handleCloseSign}>Close</Button>
-          </Modal.Footer>
         </Modal>
         <Modal
           size="lg"
@@ -182,9 +310,6 @@ export default class Navigation extends Component {
               </Button>
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.handleCloseLogin}>Close</Button>
-          </Modal.Footer>
         </Modal>
       </>
     );
