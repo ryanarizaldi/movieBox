@@ -9,6 +9,7 @@ import {
   Card,
   Pagination,
 } from "react-bootstrap";
+import {Link} from "react-router-dom";
 import dp from "../assets/img/hero1.jpg";
 import dp1 from "../assets/img/hero.jpg";
 import dp2 from "../assets/img/hero1.jpg";
@@ -24,6 +25,7 @@ export default class Hero extends Component {
       .then((response) => response.json())
       .then((json) => {
         this.setState({
+
           movies: json.results,
         });
       });
@@ -67,6 +69,7 @@ export default class Hero extends Component {
                       <Card.Body>
                         <Card.Title>{mov.original_title}</Card.Title>
                         <Card.Text>{mov.release_date.slice(0, 4)}</Card.Text>
+                        <Card.Text><Link to={`/detail/${mov.id}/overview`}>Watch Detail</Link></Card.Text>
                       </Card.Body>
                     </Card>
                   </Col>
