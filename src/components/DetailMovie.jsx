@@ -1,13 +1,42 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Container, Image, Button, Badge, Row, Col } from "react-bootstrap";
+import Overview from "./Overview";
+import Character from "./Character";
+import Review from "./Review";
 
-export default class DetailMovie extends Component {
+class DetailMovie extends Component {
+  state = {
+    movies: []
+  }
+
+  
+
+  componentDidMount = () => {
+    const id = this.props.match.params.id;
+    fetch(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=0f4cb6189e20110c05e4b524ae7821ac`
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        this.setState({
+          
+          movies: json.results,
+        });
+      });
+
+      console.log(this.props);
+  };
+
   render() {
+    const { original_title } = this.state.movies;
+
     return (
       <div>
         <Image src="" fluid />
         <Container>
-          <h1>Judul</h1>
+          <h1>{original_title}</h1>
           <h4>Score</h4>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam sint
@@ -21,70 +50,31 @@ export default class DetailMovie extends Component {
           <Button>Watch trailer</Button>
           <Button>Add to Watchlist</Button>
 
-          <div className="movie-badge">
-            {/* <Button> */}
-            <Badge pill variant="info">
-              Overview
-            </Badge>
-            {/* </Button> */}
-            <Badge pill variant="info">
-              Character
-            </Badge>
-            <Badge pill variant="info">
-              Review
-            </Badge>
-          </div>
+          <Router>
+            <div className="movie-badge">
+              {/* <Button> */}
+              <Badge pill variant="info">
+                <Link to="/detail/:id?/overview"> Overview </Link>
+              </Badge>
+              {/* </Button> */}
+              <Badge pill variant="info">
+                <Link to="/detail/character"> Character </Link> 
+              </Badge>
+              <Badge pill variant="info">
+                <Link to="/detail/review"> Review </Link>
+              </Badge>
 
-          <div className="overview">
-            <h1>Synopsis</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi
-              alias in qui eos earum fugit maiores esse ullam nemo rerum eius
-              sint architecto, reiciendis quae explicabo consequatur, et
-              distinctio sed dignissimos corrupti saepe aut id molestiae ipsum.
-              Quibusdam, quo rem libero asperiores non eum, quasi ipsa aperiam
-              hic ut sit? Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Molestias expedita voluptatum quis odit laudantium.
-              Similique ut quas porro nam commodi eum sit, inventore cumque
-              architecto neque voluptate incidunt odit dolorem, tenetur veniam
-              enim nulla quibusdam asperiores voluptatum atque. Possimus dolores
-              rerum saepe officia earum iure vel esse expedita aspernatur
-              laudantium.
-            </p>
-            <Row>
-              <Col lg="2">
-                <b>Release Date</b>
-              </Col>
-              <Col lg="10">: January 25, 1342</Col>
-              <Col lg="2">
-                <b>Director</b>
-              </Col>
-              <Col lg="10">: Michael Bay</Col>
-              <Col lg="2">
-                <b>Other detail</b>
-              </Col>
-              <Col lg="10">
-                : Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Tempora, optio.
-              </Col>
-              <Col lg="2">
-                <b>Other detail</b>
-              </Col>
-              <Col lg="10">
-                : Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Tempora, optio.
-              </Col>
-              <Col lg="2">
-                <b>Other detail</b>
-              </Col>
-              <Col lg="10">
-                : Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Tempora, optio.
-              </Col>
-            </Row>
-          </div>
+              <Switch>
+                <Route path="/detail/:id?/overview" component={Overview} />
+                <Route path="/detail/character" component={Character} />
+                <Route path="/detail/review" component={Review} />
+              </Switch>
+            </div>
+          </Router>
         </Container>
       </div>
     );
   }
 }
+
+export default withRouter(DetailMovie);
