@@ -75,7 +75,8 @@ export default class MainCategory extends Component {
       });
   };
 
-  nextPage = async (pageNum) => {
+  // fungsi pagination buat ngubah page result dari fetch
+  paginate = async (pageNum) => {
     const { option } = this.state;
     try {
       const data = await axios.get(
@@ -91,7 +92,7 @@ export default class MainCategory extends Component {
       console.log("error: ", error);
     }
   };
-
+  // fungsi dibawah gausah dipake soalnya buat manggil previous page tinggal diubah aja parameter fungsi diatas
   // prevPage = async (pageNum) => {
   //   const { option } = this.state;
   //   try {
@@ -109,13 +110,14 @@ export default class MainCategory extends Component {
   //   }
   // };
 
+  //
   firstPagi = async () => {
-    this.nextPage(1);
+    this.paginate(1);
   };
 
   lastPagi = async () => {
     const { totRes } = this.state;
-    this.nextPage(totRes);
+    this.paginate(totRes);
   };
 
   render() {
@@ -174,11 +176,11 @@ export default class MainCategory extends Component {
           <Row id="page">
             <Pagination>
               <Pagination.First
-                onClick={this.firstPagi}
-                className={currPage === 1 && "disabled"}
+                onClick={() => this.paginate(1)}
+                className={currPage === 1 && "disabled"} // tambahin class name disable kalo lagi di pagination  pertama biar ga bisa diklik
               />
               <Pagination.Prev
-                onClick={() => this.nextPage(currPage - 1)}
+                onClick={() => this.paginate(currPage - 1)}
                 className={currPage === 1 && "disabled"}
               />
               {currPage && (
@@ -192,11 +194,11 @@ export default class MainCategory extends Component {
               <Pagination.Ellipsis />
               <Pagination.Item>{14}</Pagination.Item> */}
               <Pagination.Next
-                onClick={() => this.nextPage(currPage + 1)}
+                onClick={() => this.paginate(currPage + 1)}
                 className={currPage === totRes && "disabled"}
               />
               <Pagination.Last
-                onClick={this.lastPagi}
+                onClick={() => this.paginate(totRes)}
                 className={currPage === totRes && "disabled"}
               />
             </Pagination>
