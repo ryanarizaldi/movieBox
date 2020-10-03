@@ -8,10 +8,8 @@ import Review from "./Review";
 
 class DetailMovie extends Component {
   state = {
-    movies: []
-  }
-
-  
+    movies: [],
+  };
 
   componentDidMount = () => {
     const id = this.props.match.params.id;
@@ -21,16 +19,15 @@ class DetailMovie extends Component {
       .then((response) => response.json())
       .then((json) => {
         this.setState({
-          
-          movies: json.results,
+          movies: json,
         });
       });
 
-      console.log(this.props);
+    console.log(this.props);
   };
 
   render() {
-    const { original_title } = this.state.movies;
+    const { original_title, overview } = this.state.movies;
 
     return (
       <div>
@@ -38,27 +35,17 @@ class DetailMovie extends Component {
         <Container>
           <h1>{original_title}</h1>
           <h4>Score</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam sint
-            accusamus soluta quaerat ut doloribus itaque vitae, odio beatae, sit
-            aliquid porro aspernatur magni ratione amet nesciunt. Repellat,
-            earum libero! Fugit voluptates repellat omnis eveniet, repellendus
-            sed deserunt dicta, praesentium culpa qui accusantium voluptatum?
-            Quisquam vel vero minus delectus distinctio necessitatibus
-            perspiciatis
-          </p>
+          <p>{overview}</p>
           <Button>Watch trailer</Button>
           <Button>Add to Watchlist</Button>
 
           <Router>
             <div className="movie-badge">
-              {/* <Button> */}
               <Badge pill variant="info">
                 <Link to="/detail/:id?/overview"> Overview </Link>
               </Badge>
-              {/* </Button> */}
               <Badge pill variant="info">
-                <Link to="/detail/character"> Character </Link> 
+                <Link to="/detail/character"> Character </Link>
               </Badge>
               <Badge pill variant="info">
                 <Link to="/detail/review"> Review </Link>

@@ -3,7 +3,6 @@ import { Carousel } from "react-bootstrap";
 import dp from "../assets/img/hero1.jpg";
 import dp1 from "../assets/img/hero.jpg";
 import dp2 from "../assets/img/hero1.jpg";
-import Categories from "./categories/MainCategory";
 export default class Hero extends Component {
   render() {
     return (
@@ -19,7 +18,6 @@ export default class Hero extends Component {
             <img className="d-block w-100 h-50" src={dp2} alt="Third slide" />
           </Carousel.Item>
         </Carousel>
-        <Categories />
       </>
     );
   }
