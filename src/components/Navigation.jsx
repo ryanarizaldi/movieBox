@@ -8,22 +8,44 @@ import {
   Button,
   InputGroup,
   Modal,
+  Alert,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Formik, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import axios from "axios";
+
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email address format")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(5, "Password must be 5 characters at minimum")
+    .required("Password is required"),
+  confirmPass: Yup.string()
+    .required("You forgot to type this field")
+    .oneOf([Yup.ref("password")]),
+  fullname: Yup.string()
+    .min(8, "Your name should be 8 characters long")
+    .required("Name is required"),
+  username: Yup.string()
+    .min(6, "Your username should be 6 characters long")
+    .required("Username is required"),
+});
 
 export default class Navigation extends Component {
   state = {
     dataLoggedIn: {},
     showLogin: false,
     showSign: false,
-    emailLogin: "",
-    passLogin: "",
-    emaiSign: "",
-    passSign: "",
-    fullName: "",
+    email: "",
+    password: "",
+    username: "",
+    fullname: "",
+    confirmPass: "",
     token: localStorage.getItem("login"),
+    loginAlert: null,
   };
 
   componentDidMount = () => {
@@ -43,6 +65,7 @@ export default class Navigation extends Component {
       }
     }
   };
+
   getCurrentUser = async () => {
     try {
       const { token } = this.state;
@@ -73,36 +96,44 @@ export default class Navigation extends Component {
   login = async (e) => {
     e.preventDefault();
     try {
-      const { emailLogin, passLogin } = this.state;
+      const { email, password } = this.state;
       // console.log(emailLogin, passLogin);
       const submit = await axios.post(
         "http://appdoto.herokuapp.com/api/users/login",
         {
-          email: emailLogin,
-          password: passLogin,
+          email,
+          password,
         }
       );
       localStorage.setItem("login", submit.data.data.token);
       this.onChange("token", submit.data.data.token);
+      this.setState({
+        loginAlert: "success",
+      });
       this.handleCloseLogin();
       console.log("submit", submit);
     } catch (error) {
       console.log("error", error);
+      this.setState({
+        loginAlert: "fail",
+      });
     }
   };
 
-  signUp = async (e) => {
-    console.log("masukgan");
+  showAlert = () => <Alert variant="success">Login Success</Alert>;
+
+  signUp = async (e, values) => {
+    console.log("signupJalan", values);
     e.preventDefault();
     try {
-      const { fullName, emailSign, passSign } = this.state;
+      const { email, password, username, fullname } = this.state;
       const submit = await axios.post(
         "http://appdoto.herokuapp.com/api/users/",
         {
-          email: emailSign,
-          password: passSign,
-          username: fullName,
-          fullname: fullName,
+          email: email,
+          password: password,
+          username: username,
+          fullname: fullname,
           bio: "itulah bionya",
         }
       );
@@ -119,11 +150,13 @@ export default class Navigation extends Component {
   logout = () => {
     localStorage.clear();
     this.setState({
-      emailLogin: "",
-      passLogin: "",
+      email: "",
+      password: "",
       token: null,
     });
   };
+
+  // validateLogin = () => {};
 
   // login = (e) => {
   //   e.preventDefault();
@@ -166,17 +199,22 @@ export default class Navigation extends Component {
   };
 
   render() {
-    const {
-      emailLogin,
-      passLogin,
-      token,
-      passSign,
-      emailSign,
-      fullName,
-    } = this.state;
-    const { username } = this.state.dataLoggedIn;
+    const { token, email, password, confirmPass, loginAlert } = this.state;
+    const usernameLog = this.state.dataLoggedIn.username;
+    let showSuc = false;
+    let showFail = false;
+    // console.log(usernameLog);
     return (
       <>
+        {loginAlert === "success"
+          ? (showSuc = true)
+          : loginAlert === "fail"
+          ? (showFail = true)
+          : ""}
+        <Alert show={showSuc} variant="success" dismissible>
+          Login Success
+        </Alert>
+
         <Navbar expand="lg" className="navbar">
           <Container>
             <Navbar.Brand>
@@ -200,7 +238,7 @@ export default class Navigation extends Component {
               <Nav className="ml-auto">
                 {token ? (
                   <>
-                    <Button>Hello {username}</Button>
+                    <Button>Hello {usernameLog}</Button>
                     <Button onClick={this.logout} variant="light">
                       logout
                     </Button>
@@ -219,6 +257,8 @@ export default class Navigation extends Component {
             </Navbar.Collapse>
           </Container>
         </Navbar>
+
+        {/* modal signup */}
         <Modal
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
@@ -232,45 +272,151 @@ export default class Navigation extends Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={this.signUp}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Full Name</Form.Label>
-                <Form.Control
-                  type="fullName"
-                  placeholder="Enter your Fullname"
-                  name="fullName"
-                  value={fullName}
-                  onChange={(e) => this.onChange(e.target.name, e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  name="emailSign"
-                  value={emailSign}
-                  onChange={(e) => this.onChange(e.target.name, e.target.value)}
-                />
-              </Form.Group>
+            <Formik
+              validationSchema={schema}
+              initialValues={{ email: "", password: "", fullname: "" }}
+              onSubmit={(values) => console.log(values)}
+            >
+              {({
+                touched,
+                errors,
+                isSubmitting,
+                handleChange,
+                handleSubmit,
+              }) => (
+                <Form
+                  action={this.signUp}
+                  // onChange={(e) => this.onChange(e.target.name, e.target.value)}
+                >
+                  <Form.Group controlId="fullname">
+                    <Form.Label>Full Name</Form.Label>
+                    <Field
+                      type="text"
+                      placeholder="Enter your Fullname"
+                      name="fullname"
+                      // value={this.state.fullname}
+                      className={`form-control ${
+                        touched.fullname && errors.fullname ? "is-invalid" : ""
+                      }`}
+                      onChange={handleChange}
+                      // onChange={(e) =>
+                      //   this.onChange(e.target.name, e.target.value)
+                      // }
+                      // isValid={touched.firstName && !errors.firstName}
+                      // (e) =>
+                      // this.onChange(e.target.name, e.target.value)
+                    />
+                    <ErrorMessage
+                      component="div"
+                      name="fullname"
+                      className="invalid-feedback"
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="username">
+                    <Form.Label>Username</Form.Label>
+                    <Field
+                      type="text"
+                      placeholder="Enter your Username"
+                      name="username"
+                      onChange={handleChange}
+                      // value={fullname}
+                      className={`form-control ${
+                        touched.username && errors.username ? "is-invalid" : ""
+                      }`}
+                      // onChange={(e) =>
+                      //   this.onChange(e.target.name, e.target.value)
+                      // }
+                      // isValid={touched.firstName && !errors.firstName}
+                      // (e) =>
+                      // this.onChange(e.target.name, e.target.value)
+                    />
+                    <ErrorMessage
+                      component="div"
+                      name="username"
+                      className="invalid-feedback"
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="email">
+                    <Form.Label>Email address</Form.Label>
+                    <Field
+                      type="text"
+                      placeholder="Enter email"
+                      name="email"
+                      onChange={handleChange}
+                      // value={email}
+                      // onChange={(e) =>
+                      //   this.onChange(e.target.name, e.target.value)
+                      // }
+                      className={`form-control ${
+                        touched.email && errors.email ? "is-invalid" : ""
+                      }`}
+                    />
+                    <ErrorMessage
+                      component="div"
+                      name="email"
+                      className="invalid-feedback"
+                    />
+                  </Form.Group>
 
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  name="passSign"
-                  value={passSign}
-                  onChange={(e) => this.onChange(e.target.name, e.target.value)}
-                />
-              </Form.Group>
+                  <Form.Group controlId="password">
+                    <Form.Label>Password</Form.Label>
+                    <Field
+                      type="password"
+                      placeholder="Type Your 8 Characters Long Password"
+                      name="password"
+                      onChange={handleChange}
+                      // value={password}
+                      // onChange={(e) =>
+                      //   this.onChange(e.target.name, e.target.value)
+                      // }
+                      className={`form-control ${
+                        touched.password && errors.password ? "is-invalid" : ""
+                      }`}
+                    />
+                    <ErrorMessage
+                      component="div"
+                      name="password"
+                      className="invalid-feedback"
+                    />
+                  </Form.Group>
 
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
+                  {/* <Form.Group controlId="confirmPass">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Type Your Password Again"
+                      name="confirmPass"
+                      // value={confirmPass}
+                      // onChange={(e) =>
+                      //   this.onChange(e.target.name, e.target.value)
+                      // }
+                      className={`form-control ${
+                        touched.confirmPass && errors.confirmPass
+                          ? "is-invalid"
+                          : ""
+                      }`}
+                    />
+                    <ErrorMessage
+                      component="div"
+                      name="confirmPass"
+                      className="invalid-feedback"
+                    />
+                  </Form.Group> */}
+
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "please wait..." : "Submit"}
+                  </Button>
+                </Form>
+              )}
+            </Formik>
           </Modal.Body>
         </Modal>
+
+        {/* modal login  */}
         <Modal
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
@@ -281,6 +427,14 @@ export default class Navigation extends Component {
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">Login</Modal.Title>
           </Modal.Header>
+          <Alert
+            show={showFail}
+            onClose={() => this.setState({ loginAlert: "" })}
+            variant="danger"
+            dismissible
+          >
+            Login Failed, Try Again!
+          </Alert>
           <Modal.Body>
             <Form onSubmit={this.login}>
               <Form.Group controlId="formBasicEmail">
@@ -288,8 +442,8 @@ export default class Navigation extends Component {
                 <Form.Control
                   type="email"
                   placeholder="Enter email"
-                  name="emailLogin"
-                  value={emailLogin}
+                  name="email"
+                  value={email}
                   onChange={(e) => this.onChange(e.target.name, e.target.value)}
                 />
               </Form.Group>
@@ -297,10 +451,10 @@ export default class Navigation extends Component {
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                  value={passLogin}
+                  value={password}
                   type="password"
                   placeholder="Password"
-                  name="passLogin"
+                  name="password"
                   onChange={(e) => this.onChange(e.target.name, e.target.value)}
                 />
               </Form.Group>
