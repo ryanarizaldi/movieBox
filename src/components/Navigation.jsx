@@ -10,7 +10,7 @@ import {
   Modal,
   Alert,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -47,11 +47,9 @@ export default class Navigation extends Component {
     dataLoggedIn: {},
     showLogin: false,
     showSign: false,
-    email: "",
-    password: "",
-    username: "",
-    fullname: "",
-    confirmPass: "",
+    searchInput: "",
+    errSearch: false,
+    redirect: false,
     token: localStorage.getItem("login"),
     loginAlert: null,
     loading: false,
@@ -166,6 +164,19 @@ export default class Navigation extends Component {
     });
   };
 
+  searchApa = (e) => {
+    this.setState({ searchInput: e.target.value });
+  };
+
+  search = (e) => {
+    const { searchInput } = this.state;
+    e.preventDefault();
+    console.log(searchInput);
+    searchInput !== ""
+      ? this.setState({ redirect: true })
+      : this.setState({ errSearch: true });
+  };
+
   launchModalLogin = () => {
     this.setState({ showLogin: true });
   };
@@ -183,10 +194,22 @@ export default class Navigation extends Component {
   };
 
   render() {
-    const { token, loginAlert, loading } = this.state;
+    const {
+      token,
+      loginAlert,
+      loading,
+      redirect,
+      errSearch,
+      searchInput,
+    } = this.state;
     const usernameLog = this.state.dataLoggedIn.username;
     let showSuc = false;
     let showFail = false;
+    const url = `/search/${searchInput}`;
+    if (redirect) {
+      return <Redirect push to={url} />;
+    }
+    // redirect && <Redirect push to={url} />;
     // console.log(usernameLog);
     return (
       <>
@@ -207,16 +230,23 @@ export default class Navigation extends Component {
                 MOVIEBOX
               </Link>
             </Navbar.Brand>
-            <InputGroup className="w-50">
+
+            {/* <InputGroup className="w-50"> */}
+            <Form inline onSubmit={this.search}>
               <FormControl
                 placeholder="Search Movie..."
                 aria-label="Search Movie..."
                 aria-describedby="basic-addon2"
+                onChange={this.searchApa}
               />
-              <InputGroup.Append>
-                <Button variant="outline-secondary">Search</Button>
-              </InputGroup.Append>
-            </InputGroup>
+              <Button variant="outline-secondary" type="submit">
+                Search
+              </Button>
+            </Form>
+            {/* <InputGroup.Append> */}
+            {/* </InputGroup.Append> */}
+            {/* </InputGroup> */}
+
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="ml-auto">
@@ -241,6 +271,12 @@ export default class Navigation extends Component {
             </Navbar.Collapse>
           </Container>
         </Navbar>
+
+        {errSearch && (
+          <Alert variant="danger" dismissible>
+            No Empty string please!
+          </Alert>
+        )}
 
         {/* modal signup */}
         <Modal
