@@ -23,9 +23,9 @@ const schema = Yup.object().shape({
   password: Yup.string()
     .min(5, "Password must be 5 characters at minimum")
     .required("Password is required"),
-  confirmPass: Yup.string()
-    .required("You forgot to type this field")
-    .oneOf([Yup.ref("password")]),
+  // confirmPass: Yup.string()
+  //   .required("You forgot to type this field")
+  //   .oneOf([Yup.ref("password")]),
   fullname: Yup.string()
     .min(8, "Your name should be 8 characters long")
     .required("Name is required"),
@@ -122,11 +122,10 @@ export default class Navigation extends Component {
 
   showAlert = () => <Alert variant="success">Login Success</Alert>;
 
-  signUp = async (e, values) => {
+  signUp = async (values) => {
     console.log("signupJalan", values);
-    e.preventDefault();
     try {
-      const { email, password, username, fullname } = this.state;
+      const { email, password, username, fullname } = values; //ini values dari formik
       const submit = await axios.post(
         "http://appdoto.herokuapp.com/api/users/",
         {
@@ -155,32 +154,6 @@ export default class Navigation extends Component {
       token: null,
     });
   };
-
-  // validateLogin = () => {};
-
-  // login = (e) => {
-  //   e.preventDefault();
-
-  //   const { emailLogin, passLogin } = this.state;
-  //   // console.log(JSON.stringify(emailLogin, passLogin));
-  //   fetch("http://appdoto.herokuapp.com/api/users/login", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       email: emailLogin,
-  //       password: passLogin,
-  //     }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((result) => {
-  //       console.log("Success:", result);
-  //       localStorage.setItem("token", result.data.token);
-  //       localStorage.setItem("isLogin", true);
-  //     });
-  //   this.props.onClose();
-  // };
 
   launchModalLogin = () => {
     this.setState({ showLogin: true });
@@ -274,8 +247,18 @@ export default class Navigation extends Component {
           <Modal.Body>
             <Formik
               validationSchema={schema}
-              initialValues={{ email: "", password: "", fullname: "" }}
-              onSubmit={(values) => console.log(values)}
+              initialValues={{
+                email: "",
+                password: "",
+                fullname: "",
+                username: "",
+              }}
+              onSubmit={(values, { setSubmitting }) => {
+                setTimeout(() => {
+                  this.signUp(values);
+                  setSubmitting(false);
+                }, 400);
+              }}
             >
               {({
                 touched,
@@ -285,8 +268,7 @@ export default class Navigation extends Component {
                 handleSubmit,
               }) => (
                 <Form
-                  action={this.signUp}
-                  // onChange={(e) => this.onChange(e.target.name, e.target.value)}
+                  onSubmit={handleSubmit} // ini handle submitnya formik
                 >
                   <Form.Group controlId="fullname">
                     <Form.Label>Full Name</Form.Label>
@@ -296,15 +278,9 @@ export default class Navigation extends Component {
                       name="fullname"
                       // value={this.state.fullname}
                       className={`form-control ${
-                        touched.fullname && errors.fullname ? "is-invalid" : ""
+                        touched.fullname && errors.fullname ? "is-invalid" : "" // ini biar si field ada class form control dan invalid apa ga
                       }`}
                       onChange={handleChange}
-                      // onChange={(e) =>
-                      //   this.onChange(e.target.name, e.target.value)
-                      // }
-                      // isValid={touched.firstName && !errors.firstName}
-                      // (e) =>
-                      // this.onChange(e.target.name, e.target.value)
                     />
                     <ErrorMessage
                       component="div"
@@ -323,12 +299,6 @@ export default class Navigation extends Component {
                       className={`form-control ${
                         touched.username && errors.username ? "is-invalid" : ""
                       }`}
-                      // onChange={(e) =>
-                      //   this.onChange(e.target.name, e.target.value)
-                      // }
-                      // isValid={touched.firstName && !errors.firstName}
-                      // (e) =>
-                      // this.onChange(e.target.name, e.target.value)
                     />
                     <ErrorMessage
                       component="div"
@@ -343,10 +313,6 @@ export default class Navigation extends Component {
                       placeholder="Enter email"
                       name="email"
                       onChange={handleChange}
-                      // value={email}
-                      // onChange={(e) =>
-                      //   this.onChange(e.target.name, e.target.value)
-                      // }
                       className={`form-control ${
                         touched.email && errors.email ? "is-invalid" : ""
                       }`}
@@ -365,10 +331,6 @@ export default class Navigation extends Component {
                       placeholder="Type Your 8 Characters Long Password"
                       name="password"
                       onChange={handleChange}
-                      // value={password}
-                      // onChange={(e) =>
-                      //   this.onChange(e.target.name, e.target.value)
-                      // }
                       className={`form-control ${
                         touched.password && errors.password ? "is-invalid" : ""
                       }`}
@@ -379,30 +341,6 @@ export default class Navigation extends Component {
                       className="invalid-feedback"
                     />
                   </Form.Group>
-
-                  {/* <Form.Group controlId="confirmPass">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="Type Your Password Again"
-                      name="confirmPass"
-                      // value={confirmPass}
-                      // onChange={(e) =>
-                      //   this.onChange(e.target.name, e.target.value)
-                      // }
-                      className={`form-control ${
-                        touched.confirmPass && errors.confirmPass
-                          ? "is-invalid"
-                          : ""
-                      }`}
-                    />
-                    <ErrorMessage
-                      component="div"
-                      name="confirmPass"
-                      className="invalid-feedback"
-                    />
-                  </Form.Group> */}
-
                   <Button
                     variant="primary"
                     type="submit"
