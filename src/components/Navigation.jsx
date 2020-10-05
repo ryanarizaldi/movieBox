@@ -23,15 +23,23 @@ const schema = Yup.object().shape({
   password: Yup.string()
     .min(5, "Password must be 5 characters at minimum")
     .required("Password is required"),
-  // confirmPass: Yup.string()
-  //   .required("You forgot to type this field")
-  //   .oneOf([Yup.ref("password")]),
+  confirmpass: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("You forgot to type this field"),
   fullname: Yup.string()
     .min(8, "Your name should be 8 characters long")
     .required("Name is required"),
   username: Yup.string()
     .min(6, "Your username should be 6 characters long")
     .required("Username is required"),
+});
+const schemaLogin = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email address format")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(5, "Password must be 5 characters at minimum")
+    .required("Password is required"),
 });
 
 export default class Navigation extends Component {
@@ -46,6 +54,7 @@ export default class Navigation extends Component {
     confirmPass: "",
     token: localStorage.getItem("login"),
     loginAlert: null,
+    loading: false,
   };
 
   componentDidMount = () => {
@@ -93,11 +102,11 @@ export default class Navigation extends Component {
     // console.log(this.state);
   };
 
-  login = async (e) => {
-    e.preventDefault();
+  login = async (values) => {
     try {
-      const { email, password } = this.state;
+      const { email, password } = values;
       // console.log(emailLogin, passLogin);
+      this.setState({ loading: true });
       const submit = await axios.post(
         "http://appdoto.herokuapp.com/api/users/login",
         {
@@ -109,6 +118,7 @@ export default class Navigation extends Component {
       this.onChange("token", submit.data.data.token);
       this.setState({
         loginAlert: "success",
+        loading: false,
       });
       this.handleCloseLogin();
       console.log("submit", submit);
@@ -116,6 +126,7 @@ export default class Navigation extends Component {
       console.log("error", error);
       this.setState({
         loginAlert: "fail",
+        loading: false,
       });
     }
   };
@@ -172,7 +183,7 @@ export default class Navigation extends Component {
   };
 
   render() {
-    const { token, email, password, confirmPass, loginAlert } = this.state;
+    const { token, loginAlert, loading } = this.state;
     const usernameLog = this.state.dataLoggedIn.username;
     let showSuc = false;
     let showFail = false;
@@ -252,6 +263,7 @@ export default class Navigation extends Component {
                 password: "",
                 fullname: "",
                 username: "",
+                confirmpass: "",
               }}
               onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
@@ -341,6 +353,25 @@ export default class Navigation extends Component {
                       className="invalid-feedback"
                     />
                   </Form.Group>
+                  <Form.Group controlId="Confirm Password">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Field
+                      type="password"
+                      placeholder="Type Your 8 Characters Long Password"
+                      name="confirmpass"
+                      onChange={handleChange}
+                      className={`form-control ${
+                        touched.confirmpass && errors.confirmpass
+                          ? "is-invalid"
+                          : ""
+                      }`}
+                    />
+                    <ErrorMessage
+                      component="div"
+                      name="confirmpass"
+                      className="invalid-feedback"
+                    />
+                  </Form.Group>
                   <Button
                     variant="primary"
                     type="submit"
@@ -371,36 +402,72 @@ export default class Navigation extends Component {
             variant="danger"
             dismissible
           >
-            Login Failed, Try Again!
+            Login Failed, Tapi Gatau Kenapa. Try Again!
           </Alert>
           <Modal.Body>
-            <Form onSubmit={this.login}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => this.onChange(e.target.name, e.target.value)}
-                />
-              </Form.Group>
+            <Formik
+              validationSchema={schemaLogin}
+              initialValues={{
+                email: "",
+                password: "",
+              }}
+              onSubmit={(values) => {
+                // setTimeout(() => {
+                this.login(values);
+                // setSubmitting(false);
+                // }, 1500);
+              }}
+            >
+              {({
+                touched,
+                errors,
+                isSubmitting,
+                handleChange,
+                handleSubmit,
+              }) => (
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Field
+                      type="email"
+                      placeholder="Enter email"
+                      name="email"
+                      onChange={handleChange}
+                      className={`form-control ${
+                        touched.email && errors.email ? "is-invalid" : ""
+                      }`}
+                    />
+                    <ErrorMessage
+                      component="div"
+                      name="email"
+                      className="invalid-feedback"
+                    />
+                  </Form.Group>
 
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  value={password}
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  onChange={(e) => this.onChange(e.target.name, e.target.value)}
-                />
-              </Form.Group>
+                  <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Field
+                      type="password"
+                      placeholder="Password"
+                      name="password"
+                      onChange={handleChange}
+                      className={`form-control ${
+                        touched.password && errors.password ? "is-invalid" : ""
+                      }`}
+                    />
+                    <ErrorMessage
+                      component="div"
+                      name="password"
+                      className="invalid-feedback"
+                    />
+                  </Form.Group>
 
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
+                  <Button variant="primary" type="submit" disabled={loading}>
+                    {loading ? "please wait..." : "Submit"}
+                  </Button>
+                </Form>
+              )}
+            </Formik>
           </Modal.Body>
         </Modal>
       </>

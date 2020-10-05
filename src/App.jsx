@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
+import Search from "./pages/Search";
 import Navbar from "./components/Navigation";
 import Footer from "./components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,6 +16,7 @@ export default class App extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/detail/:id?/overview" component={Detail} />
+          <Route path="/search/:keyword?" component={Search} />
         </Switch>
         <Footer />
       </Router>
