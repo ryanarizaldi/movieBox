@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, Button, Row, Col, Card, Pagination } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default class MainCategory extends Component {
@@ -113,16 +114,18 @@ export default class MainCategory extends Component {
             {this.state.movies ? (
               this.state.movies.slice(0, 20).map((mov) => (
                 <Col md="3">
-                  <Card>
-                    <Card.Img
-                      variant="top"
-                      src={"http://image.tmdb.org/t/p/w500" + mov.poster_path}
-                    />
-                    <Card.Body>
-                      <Card.Title>{mov.original_title}</Card.Title>
-                      <Card.Text>{mov.release_date.slice(0, 4)}</Card.Text>
-                    </Card.Body>
-                  </Card>
+                  <Link to={`/detail/${mov.id}/overview`}>
+                    <Card>
+                      <Card.Img
+                        variant="top"
+                        src={"http://image.tmdb.org/t/p/w500" + mov.poster_path}
+                      />
+                      <Card.Body>
+                        <Card.Title>{mov.original_title}</Card.Title>
+                        <Card.Text>{mov.release_date.slice(0, 4)}</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Link>
                 </Col>
               ))
             ) : (
