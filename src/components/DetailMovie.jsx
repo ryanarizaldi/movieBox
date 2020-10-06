@@ -8,8 +8,10 @@ import Review from "./Review";
 
 class DetailMovie extends Component {
   state = {
+
     movies: [],
-  };
+  }
+
 
   componentDidMount = () => {
     const id = this.props.match.params.id;
@@ -19,42 +21,61 @@ class DetailMovie extends Component {
       .then((response) => response.json())
       .then((json) => {
         this.setState({
-          movies: json,
+
+          movies: json
         });
       });
 
-    console.log(this.props);
-  };
+      console.log(this.props);
+  }
+
+  // overview = (id) => {
+  //   this.props.history.push({
+  //     pathname: '/overview',
+  //     state: { id }
+  //   })
+  // }
 
   render() {
-    const { original_title, overview } = this.state.movies;
+    const { id, original_title, backdrop_path, vote_count, overview  } = this.state.movies;
+    // const id = this.state;
+    // console.log(id)
+
 
     return (
-      <div>
-        <Image src="" fluid />
+      <div className="main-content">
         <Container>
-          <h1>{original_title}</h1>
-          <h4>Score</h4>
-          <p>{overview}</p>
-          <Button>Watch trailer</Button>
-          <Button>Add to Watchlist</Button>
+
+          <div className="content">
+            <Image src={"https://image.tmdb.org/t/p/w500" + backdrop_path} fluid />
+            <div className="content-detail">
+              <h1>{original_title}</h1>
+              <h4>Score: {vote_count}</h4>
+              <p>{overview}</p>
+              <Button>Watch trailer</Button>
+              <Button>Add to Watchlist</Button>
+            </div>
+          </div>
+
 
           <Router>
             <div className="movie-badge">
               <Badge pill variant="info">
-                <Link to="/detail/:id?/overview"> Overview </Link>
+                <Link to= {`/detail/${id}/overview`}> Overview </Link>
               </Badge>
               <Badge pill variant="info">
-                <Link to="/detail/character"> Character </Link>
+
+                <Link to={`/detail/${id}/character`}> Character </Link> 
+
               </Badge>
               <Badge pill variant="info">
-                <Link to="/detail/review"> Review </Link>
+                <Link to={`/detail/${id}/review`}> Review </Link>
               </Badge>
 
               <Switch>
-                <Route path="/detail/:id?/overview" component={Overview} />
-                <Route path="/detail/character" component={Character} />
-                <Route path="/detail/review" component={Review} />
+                <Route path={`/detail/${id}/overview`} component={() => <Overview movie={this.state.movies} />} />
+                <Route path={`/detail/${id}/character`} component={() => <Character movie={this.state.movies} />} />
+                <Route path={`/detail/${id}/review`} component={() => <Review movie={this.state.movies} />} />
               </Switch>
             </div>
           </Router>

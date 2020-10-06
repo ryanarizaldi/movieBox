@@ -1,57 +1,76 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router";
+import { Route, Switch } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 
-export default class Overview extends Component {
+class Overview extends Component {
+  // state = {
+  //   movies: []
+  // }
+
+  // componentDidMount = () => {
+  //   const id = this.props.match.params.id; 
+  //   fetch(
+  //     `https://api.themoviedb.org/3/movie/${id}?api_key=0f4cb6189e20110c05e4b524ae7821ac`
+  //   )
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //       this.setState({
+  //         movies: json
+  //       });
+  //     });
+
+  //     console.log(this.props);
+  // };
+
+
     render() {
+      const { overview, release_date } = this.props.movie
+      // console.log(this.state)
+
         return (
-            <div className="overview">
-            <h1>Synopsis</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi
-              alias in qui eos earum fugit maiores esse ullam nemo rerum eius
-              sint architecto, reiciendis quae explicabo consequatur, et
-              distinctio sed dignissimos corrupti saepe aut id molestiae ipsum.
-              Quibusdam, quo rem libero asperiores non eum, quasi ipsa aperiam
-              hic ut sit? Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Molestias expedita voluptatum quis odit laudantium.
-              Similique ut quas porro nam commodi eum sit, inventore cumque
-              architecto neque voluptate incidunt odit dolorem, tenetur veniam
-              enim nulla quibusdam asperiores voluptatum atque. Possimus dolores
-              rerum saepe officia earum iure vel esse expedita aspernatur
-              laudantium.
-            </p>
-            <Row>
-              <Col lg="2">
-                <b>Release Date</b>
-              </Col>
-              <Col lg="10">: January 25, 1342</Col>
-              <Col lg="2">
-                <b>Director</b>
-              </Col>
-              <Col lg="10">: Michael Bay</Col>
-              <Col lg="2">
-                <b>Other detail</b>
-              </Col>
-              <Col lg="10">
-                : Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Tempora, optio.
-              </Col>
-              <Col lg="2">
-                <b>Other detail</b>
-              </Col>
-              <Col lg="10">
-                : Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Tempora, optio.
-              </Col>
-              <Col lg="2">
-                <b>Other detail</b>
-              </Col>
-              <Col lg="10">
-                : Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Tempora, optio.
-              </Col>
-            </Row>
+         // overview = {this.props.overview};
+
+          <div className="trailer">
+            <div className="synopsis">
+              <h1>Synopsis</h1>
+              <p>{ overview }</p>
+            </div>
+
+            <div className="movie-info">
+              <h1>Movie Info</h1>
+              <Row>
+                <Col lg="2">
+                  <b>Release Date</b>
+                </Col>
+                <Col lg="10">: {release_date} </Col>
+                <Col lg="2">
+                  <b>Director</b>
+                </Col>
+                <Col lg="10">: Michael Bay</Col>
+                <Col lg="2">
+                  <b>Featured Song</b>
+                </Col>
+                <Col lg="10">
+                  : Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Tempora, optio.
+                </Col>
+                <Col lg="2">
+                  <b>Budget</b>
+                </Col>
+                <Col lg="10">
+                  : Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Tempora, optio.
+                </Col>
+              </Row>
+            </div>
+
+            {/* <Switch>
+                <Route path={`/detail/${id}/overview`} />
+            </Switch> */}
           </div>
         )
     }
 }
+
+export default withRouter(Overview);
