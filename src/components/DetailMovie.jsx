@@ -8,8 +8,10 @@ import Review from "./Review";
 
 class DetailMovie extends Component {
   state = {
-    movies: []
+
+    movies: [],
   }
+
 
   componentDidMount = () => {
     const id = this.props.match.params.id;
@@ -19,6 +21,7 @@ class DetailMovie extends Component {
       .then((response) => response.json())
       .then((json) => {
         this.setState({
+
           movies: json
         });
       });
@@ -38,9 +41,11 @@ class DetailMovie extends Component {
     // const id = this.state;
     // console.log(id)
 
+
     return (
       <div className="main-content">
         <Container>
+
           <div className="content">
             <Image src={"https://image.tmdb.org/t/p/w500" + backdrop_path} fluid />
             <div className="content-detail">
@@ -52,15 +57,16 @@ class DetailMovie extends Component {
             </div>
           </div>
 
+
           <Router>
             <div className="movie-badge">
-              {/* <Button> */}
               <Badge pill variant="info">
                 <Link to= {`/detail/${id}/overview`}> Overview </Link>
               </Badge>
-              {/* </Button> */}
               <Badge pill variant="info">
+
                 <Link to={`/detail/${id}/character`}> Character </Link> 
+
               </Badge>
               <Badge pill variant="info">
                 <Link to={`/detail/${id}/review`}> Review </Link>

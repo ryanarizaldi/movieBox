@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Button, Row, Col, Card, Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default class MainCategory extends Component {
   state = {
@@ -47,7 +48,7 @@ export default class MainCategory extends Component {
     }
   };
 
-  //INI TETEP DITULIS PREVSTATENYA MESKIPUN GA DIPAKE
+  //INI TETEP DITULIS PREVPROPSNYA MESKIPUN GA DIPAKE
   componentDidUpdate = (prevProps, prevState) => {
     const { option } = this.state;
     if (option !== prevState.option) {
@@ -59,6 +60,7 @@ export default class MainCategory extends Component {
     this.setState({
       option: num,
       active: num,
+      currPage: 1,
     });
   };
 
@@ -74,18 +76,49 @@ export default class MainCategory extends Component {
       });
   };
 
-  nextPage = async (pageNum) => {
+  // fungsi pagination buat ngubah page result dari fetch
+  paginate = async (pageNum) => {
+    const { option } = this.state;
     try {
-      const { option } = this.state;
       const data = await axios.get(
-        `https://api.themoviedb.org/3/discover/movie?api_key=0f4cb6189e20110c05e4b524ae7821ac&with_genres=${option}&page=${pageNum}`
+        option === 0
+          ? `https://api.themoviedb.org/3/movie/popular?api_key=0f4cb6189e20110c05e4b524ae7821ac&page=${pageNum}`
+          : `https://api.themoviedb.org/3/discover/movie?api_key=0f4cb6189e20110c05e4b524ae7821ac&with_genres=${option}&page=${pageNum}`
       );
       this.setState({
-        movies: data.data.data,
+        movies: data.data.results,
+        currPage: pageNum,
       });
     } catch (error) {
       console.log("error: ", error);
     }
+  };
+  // fungsi dibawah gausah dipake soalnya buat manggil previous page tinggal diubah aja parameter fungsi diatas
+  // prevPage = async (pageNum) => {
+  //   const { option } = this.state;
+  //   try {
+  //     const data = await axios.get(
+  //       option === 0
+  //         ? `https://api.themoviedb.org/3/movie/popular?api_key=0f4cb6189e20110c05e4b524ae7821ac&page=${pageNum}`
+  //         : `https://api.themoviedb.org/3/discover/movie?api_key=0f4cb6189e20110c05e4b524ae7821ac&with_genres=${option}&page=${pageNum}`
+  //     );
+  //     this.setState({
+  //       movies: data.data.results,
+  //       currPage: pageNum,
+  //     });
+  //   } catch (error) {
+  //     console.log("error: ", error);
+  //   }
+  // };
+
+  //
+  firstPagi = async () => {
+    this.paginate(1);
+  };
+
+  lastPagi = async () => {
+    const { totRes } = this.state;
+    this.paginate(totRes);
   };
 
   render() {
@@ -143,16 +176,32 @@ export default class MainCategory extends Component {
         {totRes && (
           <Row id="page">
             <Pagination>
-              <Pagination.First />
-              <Pagination.Prev />
-              {currPage && <Pagination.Item active>{currPage}</Pagination.Item>}
+              <Pagination.First
+                onClick={() => this.paginate(1)}
+                className={currPage === 1 && "disabled"} // tambahin class name disable kalo lagi di pagination  pertama biar ga bisa diklik
+              />
+              <Pagination.Prev
+                onClick={() => this.paginate(currPage - 1)}
+                className={currPage === 1 && "disabled"}
+              />
+              {currPage && (
+                <Pagination.Item active>
+                  Page {currPage} of {totRes}
+                </Pagination.Item>
+              )}
               {/* <Pagination.Item active>{1}</Pagination.Item>
               <Pagination.Item>{2}</Pagination.Item>
               <Pagination.Item>{3}</Pagination.Item>
               <Pagination.Ellipsis />
               <Pagination.Item>{14}</Pagination.Item> */}
-              <Pagination.Next />
-              <Pagination.Last />
+              <Pagination.Next
+                onClick={() => this.paginate(currPage + 1)}
+                className={currPage === totRes && "disabled"}
+              />
+              <Pagination.Last
+                onClick={() => this.paginate(totRes)}
+                className={currPage === totRes && "disabled"}
+              />
             </Pagination>
           </Row>
         )}
