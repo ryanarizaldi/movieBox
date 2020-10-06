@@ -10,7 +10,7 @@ import {
   Modal,
   Alert,
 } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -42,7 +42,7 @@ const schemaLogin = Yup.object().shape({
     .required("Password is required"),
 });
 
-export default class Navigation extends Component {
+class Navigation extends Component {
   state = {
     dataLoggedIn: {},
     showLogin: false,
@@ -169,12 +169,16 @@ export default class Navigation extends Component {
   };
 
   search = (e) => {
-    const { searchInput } = this.state;
+    const { searchInput, redirect } = this.state;
     e.preventDefault();
     console.log(searchInput);
     searchInput !== ""
       ? this.setState({ redirect: true })
       : this.setState({ errSearch: true });
+    const url = `/search/${searchInput}`;
+    if (redirect) {
+      this.props.history.push(url);
+    }
   };
 
   launchModalLogin = () => {
@@ -194,23 +198,11 @@ export default class Navigation extends Component {
   };
 
   render() {
-    const {
-      token,
-      loginAlert,
-      loading,
-      redirect,
-      errSearch,
-      searchInput,
-    } = this.state;
+    const { token, loginAlert, loading, errSearch, searchInput } = this.state;
     const usernameLog = this.state.dataLoggedIn.username;
     let showSuc = false;
     let showFail = false;
-    const url = `/search/${searchInput}`;
-    if (redirect) {
-      return <Redirect push to={url} />;
-    }
-    // redirect && <Redirect push to={url} />;
-    // console.log(usernameLog);
+
     return (
       <>
         {loginAlert === "success"
@@ -510,3 +502,5 @@ export default class Navigation extends Component {
     );
   }
 }
+
+export default withRouter(Navigation);
