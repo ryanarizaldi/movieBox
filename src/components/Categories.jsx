@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Container, Button, Row, Col, Card, Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
-export default class MainCategory extends Component {
+
+export default class Categories extends Component {
   state = {
     movies: [],
     option: 0,
@@ -89,6 +89,7 @@ export default class MainCategory extends Component {
         movies: data.data.results,
         currPage: pageNum,
       });
+      window.scrollTo(0, 900);
     } catch (error) {
       console.log("error: ", error);
     }
