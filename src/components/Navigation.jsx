@@ -6,11 +6,10 @@ import {
   Form,
   FormControl,
   Button,
-  InputGroup,
   Modal,
   Alert,
 } from "react-bootstrap";
-import { Link, Redirect, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -198,7 +197,7 @@ class Navigation extends Component {
   };
 
   render() {
-    const { token, loginAlert, loading, errSearch, searchInput } = this.state;
+    const { token, loginAlert, loading, errSearch } = this.state;
     const usernameLog = this.state.dataLoggedIn.username;
     let showSuc = false;
     let showFail = false;
