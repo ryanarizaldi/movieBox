@@ -38,7 +38,7 @@ class DetailMovie extends Component {
       id,
       original_title,
       backdrop_path,
-      vote_average,
+      vote_count,
       overview,
     } = this.state.movies;
     // const id = this.state;
@@ -48,10 +48,13 @@ class DetailMovie extends Component {
       <div className="main-content">
         <Container>
           <div className="content">
-            <Image src={"https://image.tmdb.org/t/p/w500" + backdrop_path} fluid />
+            <Image
+              src={"https://image.tmdb.org/t/p/w500" + backdrop_path}
+              fluid
+            />
             <div className="content-detail">
               <h1>{original_title}</h1>
-              <h4>Score: {vote_average}</h4>
+              <h4>Score: {vote_count}</h4>
               <p>{overview}</p>
               <div className="button">
                 <Button>Watch trailer</Button>
@@ -63,15 +66,22 @@ class DetailMovie extends Component {
           <Router>
             <div className="movie-badge">
               <div className="button-badge">
-                <h5> <Badge pill >
-                  <Link to={`/detail/${id}/overview`}> Overview </Link> 
-                </Badge> </h5>
-                <h5><Badge pill >
-                  <Link to={`/detail/${id}/character`}> Character </Link>
-                </Badge></h5>
-                <h5><Badge pill >
-                  <Link to={`/detail/${id}/review`}> Review </Link>
-                </Badge></h5>
+                <h5>
+                  {" "}
+                  <Badge pill>
+                    <Link to={`/detail/${id}/overview`}> Overview </Link>
+                  </Badge>{" "}
+                </h5>
+                <h5>
+                  <Badge pill>
+                    <Link to={`/detail/${id}/character`}> Character </Link>
+                  </Badge>
+                </h5>
+                <h5>
+                  <Badge pill>
+                    <Link to={`/detail/${id}/review`}> Review </Link>
+                  </Badge>
+                </h5>
               </div>
 
               <Switch>
