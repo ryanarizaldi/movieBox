@@ -168,16 +168,12 @@ class Navigation extends Component {
   };
 
   search = (e) => {
-    const { searchInput, redirect } = this.state;
+    const { searchInput } = this.state;
     e.preventDefault();
-    console.log(searchInput);
-    searchInput !== ""
-      ? this.setState({ redirect: true })
-      : this.setState({ errSearch: true });
     const url = `/search/${searchInput}`;
-    if (redirect) {
-      this.props.history.push(url);
-    }
+    searchInput !== ""
+      ? this.props.history.push(url)
+      : this.setState({ errSearch: true });
   };
 
   launchModalLogin = () => {

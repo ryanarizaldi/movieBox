@@ -3,7 +3,6 @@ import { Container, Button, Row, Col, Card, Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-
 export default class Categories extends Component {
   state = {
     movies: [],
@@ -129,14 +128,14 @@ export default class Categories extends Component {
         <div className="show-by">
           <h1>Show by Genre</h1>
           <Button
-            className={active === 0 ? `active` : ""}
             onClick={() => this.genre(0)}
+            className={active === 0 ? `aktip` : ""}
           >
             Popular
           </Button>
-          {this.state.genre.slice(0, 10).map((gen) => (
+          {this.state.genre.slice(0, 20).map((gen) => (
             <Button
-              className={active === gen.id ? `active` : ""}
+              className={active === gen.id ? `aktip` : ""}
               onClick={() => this.genre(gen.id)}
             >
               {gen.name}
