@@ -88,7 +88,7 @@ export default class Categories extends Component {
         movies: data.data.results,
         currPage: pageNum,
       });
-      window.scrollTo(0, 900);
+      window.scrollTo(0, 700);
     } catch (error) {
       console.log("error: ", error);
     }
