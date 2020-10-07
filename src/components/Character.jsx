@@ -1,40 +1,54 @@
-import React, { Component } from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
+import React, { Component } from "react";
+import { Row, Col, Card } from "react-bootstrap";
+import axios from "axios";
 
 export default class Character extends Component {
-    render() {
-       // const { image, name } = this.props.movie
+  state = {
+    casts: [],
+  };
 
-        return (
-            <div className="main-content">
-                <div className="character">
-                    <Row>
-                        {/* { this.props.movie === null ? */}
-                            <Col md="3">
-                                <Card>
-                                    <Card.Img
-                                        variant="top"
-                                        src={"http://s3-ap-southeast-1.amazonaws.com/upcode/static/default-image.jpg"}
-                                    />
-                                    <Card.Body>
-                                        <Card.Title>No Title</Card.Title>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        {/* :  */}
-                            {/* <Col>
-                                <Card>
-                                    <Card.Img src= {image} />
-                                    <Card.Body>
-                                        <Card.Title>{name}</Card.Title>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        } */}
-                    </Row>
-                </div>
-            </div>
-            
-        )
+  componentDidMount = async () => {
+    try {
+      const { casts } = this.state;
+      const id = this.props.movie.id;
+      const fetch = await axios.get(
+        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=0f4cb6189e20110c05e4b524ae7821ac`
+      );
+
+      console.log("fetch", fetch);
+      this.setState({
+        casts: fetch.data.cast,
+      });
+    } catch (error) {
+      console.log("error", error);
     }
+  };
+  render() {
+    // const { image, name } = this.props.movie
+    // console.log(this.props.movie);
+    const { casts } = this.state;
+    return (
+      <div className="main-content">
+        <div className="character">
+          <Row>
+            {casts.slice(0, 10).map((cast) => (
+              <Col md="3">
+                <Card>
+                  <Card.Img
+                    variant="top"
+                    src={`http://image.tmdb.org/t/p/original${cast.profile_path}`}
+                  />
+                  <Card.Body>
+                    <Card.Title>{cast.name}</Card.Title>
+                    <p>as</p>
+                    <Card.Title>{cast.character}</Card.Title>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </div>
+      </div>
+    );
+  }
 }
