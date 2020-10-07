@@ -254,7 +254,10 @@ body {
 
 /* detail movie */
 .main-content {
-  height: 1400px;
+  width: 100%;
+  height: 1100px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
 }
 
 /* .container {
@@ -264,34 +267,138 @@ body {
 
 .container .content {
   display: flex;
+  justify-content: space-between;
+  flex-direction: row;
   position: relative;
-  text-align: left;
-  color: white;
-  width: 100%;
-  height: auto;
+  color: black;
+  margin-top: 72px;
 }
 
-.container .content .img-fluid {
-  background-size: contain;
+.container .content img {
   width: 100%;
-  height: 360;
-  filter: brightness(50%);
+  height: auto;
+  /* filter: brightness(50%); */
 }
 
 .container .content-detail {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  align-items: flex-start;
+  text-align: justify;
+  margin-left: 58px;
+  /* position: absolute;
+  align-items: flex-start; */
+}
+
+.container .content-detail h4 {
+  margin-top: 12px;
+}
+
+.container .content-detail p {
+  margin-top: 12px;
+}
+
+.button {
+  display: flex;
+  flex-direction: row;
+  margin-top: 48px;
+}
+
+.button button {
+  margin-right: 24px;
+  letter-spacing: 0.1em;
+}
+
+.movie-badge {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-badge .button-badge{
+  display: flex;
+  flex-direction: row;
+}
+
+.movie-badge .button-badge .badge{
+  padding: 8px 16px;
+  margin-right: 26px;
+}
+
+.movie-badge .button-badge .badge a{
+  color:grey;
+}
+
+.movie-badge .button-badge .badge:hover{
+  background: #3F7D7Aff;;
+}
+
+/* Overview */
+.trailer {
+  margin-top: 18px;
+}
+
+.trailer h1 {
+  text-shadow: 3px 2px 1px grey;
+  font-weight: 700;
+  display: flex;
+  flex-direction: row;
+}
+
+.trailer h1:after{
+  content: "";
+  flex: 1 1;
+  border-bottom: 2px solid #A7AFB2;
+  margin: 14px;
+  margin-left: 10px;
+}
+
+.synopsis h1{
+  margin-bottom: 20px;
+}
+
+.synopsis p{
+  text-align: justify;
+  margin-bottom: 32px;
+}
+
+.movie-info h1{
+  margin-bottom: 36px;
 }
 
 /* Character */
-.character .card {
-  width: 100%;
-  height: 10px;
+.character {
+  margin-top: 18px;
 }
 
 /* Review */
-/* .review {
+.review {
+  margin-top: 18px;
   display: flex;
-} */
+  flex-direction: column;
+  text-align: justify;
+}
+
+.review b {
+  margin-bottom: 10px;
+}
+
+.review p {
+  margin-top: 10px;
+}
+
+.review .form-control {
+  height: 100px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.review .send {
+  margin-bottom: 14px;
+}
+
+.review .load-more {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 320px;
+}
