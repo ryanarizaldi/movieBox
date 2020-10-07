@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -29,7 +30,7 @@ const schema = Yup.object().shape({
     .min(8, "Your name should be 8 characters long")
     .required("Name is required"),
   username: Yup.string()
-    .min(6, "Your username should be 6 characters long")
+    // .min(6, "Your username should be 6 characters long")
     .required("Username is required"),
 });
 const schemaLogin = Yup.object().shape({
@@ -150,7 +151,22 @@ class Navigation extends Component {
 
       this.handleCloseSign();
     } catch (error) {
-      console.log("error", error);
+      console.log("error", error.response);
+      let { username, email } = error.response.data.errors;
+      console.log(username, email);
+      username = username ? `username ${username}` : "";
+      email = email ? `email ${email}` : "";
+
+      Swal.fire({
+        title: "Something went Wrong",
+
+        text: email + username,
+
+        // `${email &&'Email is '+email`
+        //   // `${email?} Email is ${email}` +
+        //   // `${username &&}username is ${username}`,
+        icon: "error",
+      });
     }
   };
 

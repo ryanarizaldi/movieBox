@@ -1,22 +1,48 @@
 import React, { Component } from "react";
 import { Carousel } from "react-bootstrap";
-import dp from "../assets/img/hero1.jpg";
-import dp1 from "../assets/img/hero.jpg";
-import dp2 from "../assets/img/hero1.jpg";
+// import dp from "../assets/img/hero1.jpg";
+// import dp1 from "../assets/img/hero.jpg";
+// import dp2 from "../assets/img/hero1.jpg";
 export default class Hero extends Component {
+  state = {
+    movies: [],
+  };
+  componentDidMount = () => {
+    this.getMovie();
+  };
+
+  getMovie = () => {
+    fetch(
+      "https://api.themoviedb.org/3/movie/popular?api_key=0f4cb6189e20110c05e4b524ae7821ac"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        this.setState({
+          movies: json.results,
+          totRes: json.total_pages,
+        });
+      });
+  };
   render() {
     return (
       <>
         <Carousel>
-          <Carousel.Item>
-            <img className="d-block w-100 h-50" src={dp} alt="First slide" />
-          </Carousel.Item>
-          <Carousel.Item>
+          {this.state.movies.slice(0, 5).map((bg) => (
+            <Carousel.Item>
+              <img
+                className="d-block w-100 h-50"
+                src={`http://image.tmdb.org/t/p/original${bg.backdrop_path}`}
+                alt="First slide"
+              />
+            </Carousel.Item>
+          ))}
+
+          {/* <Carousel.Item>
             <img className="d-block w-100 h-50" src={dp1} alt="Third slide" />
           </Carousel.Item>
           <Carousel.Item>
             <img className="d-block w-100 h-50" src={dp2} alt="Third slide" />
-          </Carousel.Item>
+          </Carousel.Item> */}
         </Carousel>
       </>
     );

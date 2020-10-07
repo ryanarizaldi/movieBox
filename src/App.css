@@ -66,6 +66,35 @@ body {
   transition: 2000;
 }
 
+/* modal */
+.modal-content {
+  background: #E1F2FE;
+}
+
+.modal-header {
+  font-weight: bold;
+  letter-spacing: 0.20em;
+}
+
+.modal-content .form-label {
+  letter-spacing: 0.1em;
+}
+
+.modal-content .btn {
+  border: none;
+  background: #7480f5;
+  font-size: 0.9em;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: all 2000;
+  letter-spacing: 0.15em;
+}
+
+.modal-content .btn:hover {
+  transform: scale(1.1);
+}
+
+
 
 
 /* carousel */
@@ -74,11 +103,15 @@ body {
 } */
 
 .carousel img {
-  height: 800px !important;
+  height: 550px !important;
+  /* opacity: 0.5; */
+  filter: contrast(90%);
+  object-fit: cover;
+  object-position: 5% 20%;
 }
 
 .carousel-indicators {
-  padding-bottom: 150px;
+  padding-bottom: 10px;
 }
 
 /* footer */
