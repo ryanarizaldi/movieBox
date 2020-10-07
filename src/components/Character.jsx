@@ -8,7 +8,6 @@ export default class Character extends Component {
         return (
             <div className="main-content">
                 <div className="character">
-                    <h1>character</h1>
                     <Row>
                         {/* { this.props.movie === null ? */}
                             <Col md="3">

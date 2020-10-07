@@ -51,7 +51,6 @@ export default class Review extends Component {
         return (
             <div className="main-content">
                 <div className="review">
-                    <h1>review</h1>
                     <Row>
                         <Col lg="12">
                             <b>Yudi Kaka</b>
@@ -63,7 +62,7 @@ export default class Review extends Component {
                                     onChange={this.handleChange}
                                 />
                             </InputGroup>
-                            <Button 
+                            <Button className="send"
                                 type="button" 
                                 variant="primary" 
                                 size="sm"
@@ -72,19 +71,17 @@ export default class Review extends Component {
                         </Col>
                         <Col lg="12">
                             <b>Yudi Kaka</b>
-                            <p>{review} {ratings} </p>
-                        </Col>
-                        <Col lg="12">
-                            <b>Yudi Kaka</b>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga voluptas repellat delectus! 
                             Vero harum facilis dolore optio sunt cupiditate tempora itaque, 
                             recusandae culpa, iure animi rerum consequuntur ullam porro obcaecati.</p>
                         </Col>
                     </Row>
-                    <Button 
-                        variant="primary" 
-                        size="sm" >Load More
-                    </Button>
+                    <div className="load-more">
+                        <Button 
+                            variant="primary" 
+                            size="sm" >Load More
+                        </Button>
+                    </div>
                 </div>
             </div>
         )
