@@ -47,7 +47,7 @@ class DetailMovie extends Component {
         <Container>
 
           <div className="content">
-            <Image src={"https://image.tmdb.org/t/p/w500" + backdrop_path} fluid />
+            <Image src={"https://image.tmdb.org/t/p/w500" + backdrop_path} />
             <div className="content-detail">
               <h1>{original_title}</h1>
               <h4>Score: {vote_count}</h4>
