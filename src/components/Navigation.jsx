@@ -6,11 +6,10 @@ import {
   Form,
   FormControl,
   Button,
-  InputGroup,
   Modal,
   Alert,
 } from "react-bootstrap";
-import { Link, Redirect, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -169,16 +168,12 @@ class Navigation extends Component {
   };
 
   search = (e) => {
-    const { searchInput, redirect } = this.state;
+    const { searchInput } = this.state;
     e.preventDefault();
-    console.log(searchInput);
-    searchInput !== ""
-      ? this.setState({ redirect: true })
-      : this.setState({ errSearch: true });
     const url = `/search/${searchInput}`;
-    if (redirect) {
-      this.props.history.push(url);
-    }
+    searchInput !== ""
+      ? this.props.history.push(url)
+      : this.setState({ errSearch: true });
   };
 
   launchModalLogin = () => {
@@ -198,7 +193,7 @@ class Navigation extends Component {
   };
 
   render() {
-    const { token, loginAlert, loading, errSearch, searchInput } = this.state;
+    const { token, loginAlert, loading, errSearch } = this.state;
     const usernameLog = this.state.dataLoggedIn.username;
     let showSuc = false;
     let showFail = false;

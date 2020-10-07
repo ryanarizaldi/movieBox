@@ -4,6 +4,8 @@ import DetailMovie from "../components/DetailMovie";
 
 export default class Detail extends Component {
   render() {
+    window.scrollTo(0, 0);
+
     return (
       <div>
         <DetailMovie />
