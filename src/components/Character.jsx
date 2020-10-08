@@ -9,7 +9,6 @@ export default class Character extends Component {
 
   componentDidMount = async () => {
     try {
-      const { casts } = this.state;
       const id = this.props.movie.id;
       const fetch = await axios.get(
         `https://api.themoviedb.org/3/movie/${id}/credits?api_key=0f4cb6189e20110c05e4b524ae7821ac`

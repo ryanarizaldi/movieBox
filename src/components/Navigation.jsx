@@ -7,7 +7,6 @@ import {
   FormControl,
   Button,
   Modal,
-  Alert,
 } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -48,10 +47,8 @@ class Navigation extends Component {
     showLogin: false,
     showSign: false,
     searchInput: "",
-    errSearch: false,
     redirect: false,
     token: localStorage.getItem("login"),
-    loginAlert: null,
     loading: false,
   };
 
@@ -232,10 +229,8 @@ class Navigation extends Component {
   };
 
   render() {
-    const { token, loginAlert, loading, errSearch } = this.state;
+    const { token, loading } = this.state;
     const usernameLog = this.state.dataLoggedIn.username;
-    let showSuc = false;
-    let showFail = false;
 
     return (
       <>
@@ -448,14 +443,7 @@ class Navigation extends Component {
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">Login</Modal.Title>
           </Modal.Header>
-          <Alert
-            show={showFail}
-            onClose={() => this.setState({ loginAlert: "" })}
-            variant="danger"
-            dismissible
-          >
-            Login Failed, Tapi Gatau Kenapa. Try Again!
-          </Alert>
+
           <Modal.Body>
             <Formik
               validationSchema={schemaLogin}

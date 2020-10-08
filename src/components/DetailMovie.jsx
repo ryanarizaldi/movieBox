@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Container, Image, Button, Badge, Row, Col } from "react-bootstrap";
+import { Container, Image, Button, Badge } from "react-bootstrap";
 import Overview from "./Overview";
 import Character from "./Character";
 import Review from "./Review";
