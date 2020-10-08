@@ -49,12 +49,12 @@ export default class Review extends Component {
     render() {
         const { review, ratings } = this.state;
         return (
-            <div className="main-content">
+            <div className="content-badge">
                 <div className="review">
                     <Row>
                         <Col lg="12">
                             <b>Yudi Kaka</b>
-                            <ReactStars count={5} size={20} onChange={this.handleStar} />
+                            <ReactStars count={5} size={20} color2={'#ffd700'} onChange={this.handleStar} />
                             <InputGroup>
                                 <FormControl
                                     placeholder="Leave a review" 
