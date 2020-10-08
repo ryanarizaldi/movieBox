@@ -189,11 +189,7 @@ export default class Categories extends Component {
                   Page {currPage} of {totRes}
                 </Pagination.Item>
               )}
-              {/* <Pagination.Item active>{1}</Pagination.Item>
-              <Pagination.Item>{2}</Pagination.Item>
-              <Pagination.Item>{3}</Pagination.Item>
-              <Pagination.Ellipsis />
-              <Pagination.Item>{14}</Pagination.Item> */}
+
               <Pagination.Next
                 onClick={() => this.paginate(currPage + 1)}
                 className={currPage === totRes && "disabled"}

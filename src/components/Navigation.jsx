@@ -7,7 +7,6 @@ import {
   FormControl,
   Button,
   Modal,
-  Alert,
 } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -48,10 +47,8 @@ class Navigation extends Component {
     showLogin: false,
     showSign: false,
     searchInput: "",
-    errSearch: false,
     redirect: false,
     token: localStorage.getItem("login"),
-    loginAlert: null,
     loading: false,
   };
 
@@ -115,21 +112,39 @@ class Navigation extends Component {
       localStorage.setItem("login", submit.data.data.token);
       this.onChange("token", submit.data.data.token);
       this.setState({
-        loginAlert: "success",
         loading: false,
       });
       this.handleCloseLogin();
-      console.log("submit", submit);
+      const username = submit.data.data.username;
+      Swal.fire({
+        title: "Login Success",
+        text: `Welcome ${username}`,
+        icon: "success",
+      });
     } catch (error) {
-      console.log("error", error);
+      console.log("error ini", error);
       this.setState({
-        loginAlert: "fail",
         loading: false,
+      });
+      const msg = error.response.data.messages.errors;
+      console.log(msg);
+      Swal.fire({
+        title: "Login Failed",
+        text: "Email or password invalid!",
+        icon: "error",
       });
     }
   };
 
-  showAlert = () => <Alert variant="success">Login Success</Alert>;
+  openLogin = () => {
+    this.handleCloseSign();
+    this.launchModalLogin();
+  };
+
+  openSign = () => {
+    this.handleCloseLogin();
+    this.launchModalSign();
+  };
 
   signUp = async (values) => {
     console.log("signupJalan", values);
@@ -150,6 +165,11 @@ class Navigation extends Component {
       console.log(submit);
 
       this.handleCloseSign();
+      Swal.fire({
+        title: "Sign up Success",
+        text: "No need to Login. Enjoy our app",
+        icon: "success",
+      });
     } catch (error) {
       console.log("error", error.response);
       let { username, email } = error.response.data.errors;
@@ -161,10 +181,6 @@ class Navigation extends Component {
         title: "Something went Wrong",
 
         text: email + username,
-
-        // `${email &&'Email is '+email`
-        //   // `${email?} Email is ${email}` +
-        //   // `${username &&}username is ${username}`,
         icon: "error",
       });
     }
@@ -189,7 +205,11 @@ class Navigation extends Component {
     const url = `/search/${searchInput}`;
     searchInput !== ""
       ? this.props.history.push(url)
-      : this.setState({ errSearch: true });
+      : Swal.fire({
+          title: "Nope",
+          text: "we are can't search empty string",
+          icon: "error",
+        });
   };
 
   launchModalLogin = () => {
@@ -209,22 +229,11 @@ class Navigation extends Component {
   };
 
   render() {
-    const { token, loginAlert, loading, errSearch } = this.state;
+    const { token, loading } = this.state;
     const usernameLog = this.state.dataLoggedIn.username;
-    let showSuc = false;
-    let showFail = false;
 
     return (
       <>
-        {loginAlert === "success"
-          ? (showSuc = true)
-          : loginAlert === "fail"
-          ? (showFail = true)
-          : ""}
-        <Alert show={showSuc} variant="success" dismissible>
-          Login Success
-        </Alert>
-
         <Navbar expand="lg" className="navbar">
           <Container>
             <Navbar.Brand>
@@ -246,9 +255,6 @@ class Navigation extends Component {
                 Search
               </Button>
             </Form>
-            {/* <InputGroup.Append> */}
-            {/* </InputGroup.Append> */}
-            {/* </InputGroup> */}
 
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -274,12 +280,6 @@ class Navigation extends Component {
             </Navbar.Collapse>
           </Container>
         </Navbar>
-
-        {errSearch && (
-          <Alert variant="danger" dismissible>
-            No Empty string please!
-          </Alert>
-        )}
 
         {/* modal signup */}
         <Modal
@@ -411,13 +411,21 @@ class Navigation extends Component {
                       className="invalid-feedback"
                     />
                   </Form.Group>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "please wait..." : "Submit"}
-                  </Button>
+                  <div className="align-items-center">
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "please wait..." : "Submit"}
+                    </Button>
+                    <p>
+                      Already have an Account?{" "}
+                      <a href="#" onClick={this.openLogin}>
+                        Login
+                      </a>
+                    </p>
+                  </div>
                 </Form>
               )}
             </Formik>
@@ -435,14 +443,7 @@ class Navigation extends Component {
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">Login</Modal.Title>
           </Modal.Header>
-          <Alert
-            show={showFail}
-            onClose={() => this.setState({ loginAlert: "" })}
-            variant="danger"
-            dismissible
-          >
-            Login Failed, Tapi Gatau Kenapa. Try Again!
-          </Alert>
+
           <Modal.Body>
             <Formik
               validationSchema={schemaLogin}
@@ -504,6 +505,12 @@ class Navigation extends Component {
                   <Button variant="primary" type="submit" disabled={loading}>
                     {loading ? "please wait..." : "Submit"}
                   </Button>
+                  <p>
+                    Dont have an account yet?{" "}
+                    <a href="#" onClick={this.openSign}>
+                      Sign up
+                    </a>
+                  </p>
                 </Form>
               )}
             </Formik>

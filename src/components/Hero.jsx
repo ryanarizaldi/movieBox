@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import { Carousel } from "react-bootstrap";
-// import dp from "../assets/img/hero1.jpg";
-// import dp1 from "../assets/img/hero.jpg";
-// import dp2 from "../assets/img/hero1.jpg";
 export default class Hero extends Component {
   state = {
     movies: [],
