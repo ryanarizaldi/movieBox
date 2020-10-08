@@ -27,11 +27,11 @@ export default class Character extends Component {
     // console.log(this.props.movie);
     const { casts } = this.state;
     return (
-      <div className="main-content">
+      <div className="main-char">
         <div className="character">
           <Row>
             {casts.slice(0, 10).map((cast) => (
-              <Col md="3">
+              <Col md="2">
                 <Card>
                   <Card.Img
                     variant="top"
