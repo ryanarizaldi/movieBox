@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Button, Row, Col, Card, Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import noimg from "../assets/img/noimg.png";
 
 export default class Categories extends Component {
   state = {
@@ -151,11 +152,15 @@ export default class Categories extends Component {
                     <Card>
                       <Card.Img
                         variant="top"
-                        src={"http://image.tmdb.org/t/p/w500" + mov.poster_path}
+                        src={
+                          mov.poster_path
+                            ? `http://image.tmdb.org/t/p/w500${mov.poster_path}`
+                            : noimg
+                        }
                       />
                       <Card.Body>
                         <Card.Title>{mov.original_title}</Card.Title>
-                        <Card.Text>{mov.release_date.slice(0, 4)}</Card.Text>
+                        <Card.Text>{mov.release_date?.slice(0, 4)}</Card.Text>
                       </Card.Body>
                     </Card>
                   </Link>

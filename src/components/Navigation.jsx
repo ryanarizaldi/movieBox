@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import {
   Navbar,
+  Row,
   Nav,
   Container,
   Form,
   FormControl,
   Button,
   Modal,
+  Col,
 } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -210,6 +212,7 @@ class Navigation extends Component {
           text: "we are can't search empty string",
           icon: "error",
         });
+    this.setState({ searchInput: "" });
   };
 
   launchModalLogin = () => {
@@ -229,7 +232,7 @@ class Navigation extends Component {
   };
 
   render() {
-    const { token, loading } = this.state;
+    const { token, loading, searchInput } = this.state;
     const usernameLog = this.state.dataLoggedIn.username;
 
     return (
@@ -250,6 +253,7 @@ class Navigation extends Component {
                 aria-label="Search Movie..."
                 aria-describedby="basic-addon2"
                 onChange={this.searchApa}
+                value={searchInput}
               />
               <Button variant="outline-secondary" type="submit">
                 Search
@@ -411,21 +415,26 @@ class Navigation extends Component {
                       className="invalid-feedback"
                     />
                   </Form.Group>
-                  <div className="align-items-center">
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? "please wait..." : "Submit"}
-                    </Button>
-                    <p>
-                      Already have an Account?{" "}
-                      <a href="#" onClick={this.openLogin}>
-                        Login
-                      </a>
-                    </p>
-                  </div>
+                  <Row>
+                    <Col md={10}>
+                      <p>
+                        Already have an Account?{" "}
+                        <a href="#" onClick={this.openLogin}>
+                          Login
+                        </a>
+                      </p>
+                    </Col>
+                    <Col>
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="ml-auto"
+                      >
+                        {isSubmitting ? "please wait..." : "Submit"}
+                      </Button>
+                    </Col>
+                  </Row>
                 </Form>
               )}
             </Formik>

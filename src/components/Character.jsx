@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import axios from "axios";
+import noimg from "../assets/img/noimg.png";
 
 export default class Character extends Component {
   state = {
@@ -35,7 +36,11 @@ export default class Character extends Component {
                 <Card>
                   <Card.Img
                     variant="top"
-                    src={`http://image.tmdb.org/t/p/original${cast.profile_path}`}
+                    src={
+                      cast.profile_path
+                        ? `http://image.tmdb.org/t/p/original${cast.profile_path}`
+                        : noimg
+                    }
                   />
                   <Card.Body>
                     <Card.Title>{cast.name}</Card.Title>

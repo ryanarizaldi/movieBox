@@ -60,7 +60,7 @@ export default class Searched extends Component {
             {movies.length ? (
               movies.map((mov) => (
                 <Col lg="3">
-                  <Link to={`/detail/${mov.id}`}>
+                  <Link to={`/detail/${mov.id}/overview`}>
                     <Card>
                       <Card.Img
                         variant="top"
