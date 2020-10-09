@@ -109,7 +109,6 @@ class Navigation extends Component {
   login = async (values) => {
     try {
       const { email, password } = values;
-      // console.log(emailLogin, passLogin);
       this.setState({ loading: true });
       const submit = await axios.post(
         "http://appdoto.herokuapp.com/api/users/login",
