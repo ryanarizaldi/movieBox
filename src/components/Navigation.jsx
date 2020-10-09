@@ -16,6 +16,8 @@ import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
+import logo from "../assets/img/moviebox.png";
+import logo2 from "../assets/img/movieboxWithLogo.png";
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -189,11 +191,22 @@ class Navigation extends Component {
   };
 
   logout = () => {
-    localStorage.clear();
-    this.setState({
-      email: "",
-      password: "",
-      token: null,
+    Swal.fire({
+      title: "Logout?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes !",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        this.setState({
+          email: "",
+          password: "",
+          token: null,
+        });
+      }
     });
   };
 
@@ -241,12 +254,10 @@ class Navigation extends Component {
           <Container>
             <Navbar.Brand>
               <Link to="/">
-                <FontAwesomeIcon icon="video" />
-                MOVIEBOX
+                <img src={logo} alt="logo" />
               </Link>
             </Navbar.Brand>
 
-            {/* <InputGroup className="w-50"> */}
             <Form inline onSubmit={this.search}>
               <FormControl
                 placeholder="Search Movie..."
@@ -265,7 +276,7 @@ class Navigation extends Component {
               <Nav className="ml-auto">
                 {token ? (
                   <>
-                    <Button>Hello {usernameLog}</Button>
+                    <Link to="/user">Hello {usernameLog}</Link>
                     <Button onClick={this.logout} variant="light">
                       logout
                     </Button>
