@@ -234,6 +234,10 @@ body {
   padding: 5px;
 }
 
+.page-item.active .page-link {
+background-color: red;
+}
+
 
 
 /* footer */

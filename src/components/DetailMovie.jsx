@@ -63,7 +63,6 @@ class DetailMovie extends Component {
             </div>
           </div>
 
-          <Router>
             <div className="movie-badge">
               <div className="button-badge">
                 <h5>
@@ -87,19 +86,22 @@ class DetailMovie extends Component {
               <Switch>
                 <Route
                   path={`/detail/${id}/overview`}
+                  exact
                   component={() => <Overview movie={this.state.movies} />}
                 />
                 <Route
                   path={`/detail/${id}/character`}
+                  exact
                   component={() => <Character movie={this.state.movies} />}
                 />
                 <Route
                   path={`/detail/${id}/review`}
+                  exact
                   component={() => <Review movie={this.state.movies} />}
                 />
               </Switch>
             </div>
-          </Router>
+    
         </Container>
       </div>
     );
