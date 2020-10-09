@@ -5,6 +5,7 @@ import as from "../assets/img/apple_store.png";
 import p from "../assets/img/pinterest.png";
 import f from "../assets/img/facebook.png";
 import i from "../assets/img/instagram.png";
+import logo from "../assets/img/txtsplash.png";
 
 export default class Footer extends Component {
   render() {

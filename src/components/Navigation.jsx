@@ -7,6 +7,7 @@ import {
   FormControl,
   Button,
   Modal,
+  Image
 } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +15,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
+import logo from "../assets/img/txtsplash.png";
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -238,8 +240,7 @@ class Navigation extends Component {
           <Container>
             <Navbar.Brand>
               <Link to="/">
-                <FontAwesomeIcon icon="video" />
-                MOVIEBOX
+                <Image src={logo} />
               </Link>
             </Navbar.Brand>
 

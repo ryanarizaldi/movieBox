@@ -33,13 +33,15 @@ export default class Review extends Component {
     } else {
       Swal.fire({
         title: "Review Posted",
-        text: `you just input ${review}`,
+        text: `you just input ${review} ${ratings} star!`,
         icon: "success",
       });
       this.setState({
-        reviewee: [...reviewee, { id: 1, text: review }],
+        reviewee: [...reviewee, { id: 1, text: review, rate: ratings }],
         review: "",
+        ratings: ""
       });
+      console.log(reviewee)
     }
   };
 
@@ -65,6 +67,7 @@ export default class Review extends Component {
                 size={20}
                 color2={"#ffd700"}
                 onChange={this.handleStar}
+                value={ratings}
               />
               <InputGroup>
                 <FormControl
@@ -83,12 +86,15 @@ export default class Review extends Component {
                 Submit
               </Button>
             </Col>
+            
             {reviewee.map((rev) => (
               <Col lg="12">
                 <b>Yudi Kaka</b>
+                <ReactStars size={20} value={rev.rate}  />
                 <p>{rev.text}</p>
               </Col>
             ))}
+
             <Col lg="12">
               <b>Yudi Kaka</b>
               <p>

@@ -38,7 +38,7 @@ class DetailMovie extends Component {
       id,
       original_title,
       backdrop_path,
-      vote_count,
+      vote_average,
       overview,
     } = this.state.movies;
     // const id = this.state;
@@ -54,7 +54,7 @@ class DetailMovie extends Component {
             />
             <div className="content-detail">
               <h1>{original_title}</h1>
-              <h4>Score: {vote_count}</h4>
+              <h4>Score: {vote_average}</h4>
               <p>{overview}</p>
               <div className="button">
                 <Button>Watch trailer</Button>
