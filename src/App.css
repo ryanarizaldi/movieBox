@@ -3,6 +3,22 @@ body {
   background: #E1F2FE;
 }
 
+/* modal signup */
+
+.preview-pp {
+  margin: auto;
+  width: 150px;
+  /* object-fit: cover;
+  object-position: 5% 20%; */
+}
+
+.preview-name {
+  /* margin: auto; */
+  /* padding-left: 230px; dasar begooo */
+  text-align: center;
+  margin: 10px 0 10px 0;
+}
+
 /* navbar */
 .navbar {
   background: #98D2EB;

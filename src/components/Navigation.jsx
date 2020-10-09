@@ -9,6 +9,7 @@ import {
   Button,
   Modal,
   Col,
+  Image,
 } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,7 +31,7 @@ const schema = Yup.object().shape({
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("You forgot to type this field"),
   fullname: Yup.string()
-    .min(8, "Your name should be 8 characters long")
+    // .min(8, "Your name should be 8 characters long")
     .required("Name is required"),
   username: Yup.string()
     // .min(6, "Your username should be 6 characters long")
@@ -54,6 +55,10 @@ class Navigation extends Component {
     redirect: false,
     token: localStorage.getItem("login"),
     loading: false,
+    image: {
+      file: {},
+      url: "",
+    },
   };
 
   componentDidMount = () => {
@@ -150,23 +155,43 @@ class Navigation extends Component {
     this.launchModalSign();
   };
 
-  signUp = async (values) => {
-    console.log("signupJalan", values);
+  signUp = async (values, images) => {
+    // console.log("signupJalan", values);
     try {
+      this.setState({ loading: true });
+
+      // console.log("ini jalan");
       const { email, password, username, fullname } = values; //ini values dari formik
-      const submit = await axios.post(
-        "http://appdoto.herokuapp.com/api/users/",
-        {
-          email: email,
-          password: password,
-          username: username,
-          fullname: fullname,
-          bio: "itulah bionya",
-        }
-      );
-      localStorage.setItem("login", submit.data.data.token);
-      this.onChange("token", submit.data.data.token);
+      const formData = new FormData(); //buat formdata di body api
+      formData.append("email", email);
+      formData.append("fullname", fullname);
+      formData.append("username", username);
+      formData.append("password", password);
+      formData.append("images", images);
+
+      const submit = await axios({
+        method: "post",
+        url: "https://nameless-temple-74030.herokuapp.com/register",
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      // const submit = await axios.post(
+      //   "http://appdoto.herokuapp.com/api/users/",
+      //   {
+      //     email: email,
+      //     password: password,
+      //     username: username,
+      //     fullname: fullname,
+      //     bio: "itulah bionya",
+      //   }
+      // );
+      localStorage.setItem("login", submit.data.access_token);
+      this.onChange("token", submit.data.access_token);
       console.log(submit);
+      this.setState({
+        loading: false,
+      });
 
       this.handleCloseSign();
       Swal.fire({
@@ -176,17 +201,28 @@ class Navigation extends Component {
       });
     } catch (error) {
       console.log("error", error.response);
-      let { username, email } = error.response.data.errors;
-      console.log(username, email);
-      username = username ? `username ${username}` : "";
-      email = email ? `email ${email}` : "";
+
+      const { msg } = error.response.data;
+      this.setState({
+        loading: false,
+      });
 
       Swal.fire({
-        title: "Something went Wrong",
-
-        text: email + username,
+        title: "Something Went Wrong",
+        text: msg,
         icon: "error",
       });
+      // let { username, email } = error.response.data.errors;
+      // console.log(username, email);
+      // username = username ? `username ${username}` : "";
+      // email = email ? `email ${email}` : "";
+
+      // Swal.fire({
+      //   title: "Something went Wrong",
+
+      //   text: email + username,
+      //   icon: "error",
+      // });
     }
   };
 
@@ -242,6 +278,16 @@ class Navigation extends Component {
 
   handleCloseSign = () => {
     this.setState({ showSign: false });
+  };
+
+  handleFileUpload = (event) => {
+    const file = event.currentTarget.files[0];
+    this.setState({
+      image: {
+        file: event.currentTarget.files[0],
+        url: URL.createObjectURL(file),
+      },
+    });
   };
 
   render() {
@@ -313,6 +359,7 @@ class Navigation extends Component {
             <Formik
               validationSchema={schema}
               initialValues={{
+                image: "",
                 email: "",
                 password: "",
                 fullname: "",
@@ -336,6 +383,43 @@ class Navigation extends Component {
                 <Form
                   onSubmit={handleSubmit} // ini handle submitnya formik
                 >
+                  <Form.Group controlId="Image">
+                    <Form.File>
+                      <div className="preview-pp">
+                        {this.state.image.url && (
+                          <Image
+                            roundedCircle
+                            fluid
+                            // width="350"
+                            // fill
+                            src={this.state.image.url}
+                            alt={this.state.image.file.name}
+                          />
+                        )}
+                      </div>
+                      <div className="preview-name">
+                        {this.state.image.file.name && (
+                          <span>{this.state.image.file.name}</span>
+                        )}
+                      </div>
+                      <Field
+                        type="file"
+                        placeholder="Enter your Fullname"
+                        name="image"
+                        // value={this.state.fullname}
+                        className={`form-control ${
+                          touched.image && errors.image ? "is-invalid" : "" // ini biar si field ada class form control dan invalid apa ga
+                        }`}
+                        onChange={(e) => this.handleFileUpload(e)}
+                        // onChange={handleChange}
+                      />
+                      <ErrorMessage
+                        component="div"
+                        name="image"
+                        className="invalid-feedback"
+                      />
+                    </Form.File>
+                  </Form.Group>
                   <Form.Group controlId="fullname">
                     <Form.Label>Full Name</Form.Label>
                     <Field
@@ -439,10 +523,10 @@ class Navigation extends Component {
                       <Button
                         variant="primary"
                         type="submit"
-                        disabled={isSubmitting}
+                        disabled={loading}
                         className="ml-auto"
                       >
-                        {isSubmitting ? "please wait..." : "Submit"}
+                        {loading ? "please wait..." : "Submit"}
                       </Button>
                     </Col>
                   </Row>

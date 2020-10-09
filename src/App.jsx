@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Detail from "./pages/Detail";
 import Search from "./pages/Search";
 import User from "./pages/User";
+import EditUser from "./pages/EditUser";
 import Navbar from "./components/Navigation";
 import Footer from "./components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,6 +20,7 @@ export default class App extends Component {
           <Route path="/detail/:id?/overview" component={Detail} />
           <Route path="/search/:keyword?" component={Search} />
           <Route path="/user/" component={User} />
+          <Route path="/user/edit" component={EditUser} />
         </Switch>
         <Footer />
       </Router>

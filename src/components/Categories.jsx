@@ -134,7 +134,7 @@ export default class Categories extends Component {
           >
             Popular
           </Button>
-          {this.state.genre.slice(0, 20).map((gen) => (
+          {this.state.genre.map((gen) => (
             <Button
               className={active === gen.id ? `aktip` : ""}
               onClick={() => this.genre(gen.id)}
