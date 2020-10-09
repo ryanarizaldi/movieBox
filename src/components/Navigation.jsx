@@ -183,7 +183,7 @@ class Navigation extends Component {
       const submit = await axios({
         method: "post",
         url: "https://nameless-temple-74030.herokuapp.com/register",
-        data: "string",
+        data: stringQs,
         headers: {
           "Content-Type": "application/x-www-form-urlencode;charset=utf-8",
         },
