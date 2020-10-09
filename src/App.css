@@ -1,6 +1,6 @@
 body {
-  font-family: 'Open Sans', sans-serif !important;
-  background: #E1F2FE;
+  font-family: "Open Sans", sans-serif !important;
+  background: #e1f2fe;
 }
 
 /* modal signup */
@@ -21,7 +21,7 @@ body {
 
 /* navbar */
 .navbar {
-  background: #98D2EB;
+  background: #98d2eb;
   height: 80px;
 }
 
@@ -40,7 +40,7 @@ body {
   margin-right: 10px;
   margin-top: 5px;
   text-decoration: none;
-  background: #E1F2FE;
+  background: #e1f2fe;
   border-radius: 5px;
   padding: 5px;
   font-size: 1.2em;
@@ -54,7 +54,6 @@ body {
   transform: scale(1.1);
 }
 
-
 .navbar-nav button {
   background: none;
   color: black;
@@ -65,7 +64,7 @@ body {
 
 /* nav login signup */
 .ml-auto .btn {
-  background: #E1F2FE;
+  background: #e1f2fe;
   font-size: 0.9em;
   font-weight: bold;
   border-radius: 5px;
@@ -92,7 +91,7 @@ body {
 .navbar .form-inline button {
   border: none;
   color: black;
-  background: #E1F2FE;
+  background: #e1f2fe;
   font-size: 0.9em;
   font-weight: bold;
   border-radius: 5px;
@@ -101,12 +100,12 @@ body {
 
 /* modal */
 .modal-content {
-  background: #E1F2FE;
+  background: #e1f2fe;
 }
 
 .modal-header {
   font-weight: bold;
-  letter-spacing: 0.20em;
+  letter-spacing: 0.2em;
 }
 
 .modal-content .form-label {
@@ -126,9 +125,6 @@ body {
 .modal-content .btn:hover {
   transform: scale(1.1);
 }
-
-
-
 
 /* carousel */
 /* .carousel {
@@ -155,7 +151,7 @@ body {
   left: 0px;
   right: 0;
   bottom: 0px;
-  background: #49392C;
+  background: #49392c;
   padding: 67.4px 568px 24.47px 568px;
   color: white;
   text-align: center;
@@ -179,7 +175,7 @@ body {
 .card:hover {
   transform: scale(1.05);
   cursor: pointer;
-  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2)
+  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2);
 }
 
 .card-img-top {
@@ -189,7 +185,7 @@ body {
 }
 
 .card-body {
-  background: #B2B1CF;
+  background: #b2b1cf;
   color: black;
   border-radius: 0 0 5px 5px;
 }
@@ -210,29 +206,28 @@ body {
 .show-by .btn {
   border: none;
   color: black;
-  background: #98D2EB;
+  background: #98d2eb;
   margin-right: 12px;
   margin-bottom: 10px;
-  transition: all .4s;
+  transition: all 0.4s;
   letter-spacing: 0.1em;
 }
 
 .show-by .btn:hover {
   transform: translateY(-6px);
-  background: #B2B1CF;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2)
+  background: #b2b1cf;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .show-by .aktip {
   cursor: not-allowed;
   pointer-events: none;
   font-weight: bold;
-  background: #B2B1CF;
+  background: #b2b1cf;
 }
 
 .movie-by-genre {
   margin-top: 48px;
-
 }
 
 /* pagination */
@@ -243,31 +238,29 @@ body {
   margin-bottom: 72px;
 }
 
-.pagination>li>a:focus,
-.pagination>li>a:hover,
-.pagination>li>span:focus,
-.pagination>li>span:hover {
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
   color: #5a5a5a;
   background-color: #eee;
   border-color: #ddd;
 }
 
-.pagination>.active>a {
+.pagination > .active > a {
   color: white;
-  background-color: #5A4181 !Important;
-  border: solid 1px #5A4181 !Important;
+  background-color: #5a4181 !important;
+  border: solid 1px #5a4181 !important;
 }
 
-.pagination>.active>a:hover {
-  background-color: #5A4181 !Important;
-  border: solid 1px #5A4181;
+.pagination > .active > a:hover {
+  background-color: #5a4181 !important;
+  border: solid 1px #5a4181;
 }
 
 .page-item {
   padding: 5px;
 }
-
-
 
 /* footer */
 .footer {
@@ -395,8 +388,7 @@ body {
 }
 
 .movie-badge .button-badge .badge:hover {
-  background: #3F7D7Aff;
-  ;
+  background: #3f7d7aff;
 }
 
 /* Overview */
@@ -415,7 +407,7 @@ body {
 .trailer h1:after {
   content: "";
   flex: 1 1;
-  border-bottom: 2px solid #A7AFB2;
+  border-bottom: 2px solid #a7afb2;
   margin: 14px;
   margin-left: 10px;
 }
@@ -464,7 +456,6 @@ body {
   font-size: 14px;
   text-align: center;
 }
-
 
 /* Review */
 .content-badge {

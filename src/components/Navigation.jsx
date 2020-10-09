@@ -12,13 +12,20 @@ import {
   Image,
 } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
 import logo from "../assets/img/moviebox.png";
-import logo2 from "../assets/img/movieboxWithLogo.png";
+import { css } from "@emotion/core";
+import { RotateLoader } from "react-spinners/ClipLoader";
+import qs from "qs";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -55,10 +62,10 @@ class Navigation extends Component {
     redirect: false,
     token: localStorage.getItem("login"),
     loading: false,
-    image: {
-      file: {},
-      url: "",
-    },
+    // image: {
+    //   file: {},
+    //   url: "",
+    // },
   };
 
   componentDidMount = () => {
@@ -82,8 +89,6 @@ class Navigation extends Component {
   getCurrentUser = async () => {
     try {
       const { token } = this.state;
-      // console.log("token", token);
-
       const fetch = await axios.get("http://appdoto.herokuapp.com/api/user", {
         headers: {
           Authorization: token,
@@ -103,7 +108,6 @@ class Navigation extends Component {
     this.setState({
       [name]: e,
     });
-    // console.log(this.state);
   };
 
   login = async (values) => {
@@ -155,24 +159,34 @@ class Navigation extends Component {
   };
 
   signUp = async (values, images) => {
-    // console.log("signupJalan", values);
+    const { email, password, username, fullname } = values; //ini values dari formik
+    // console.log(formData);
+    console.log("value input", email, password, username, fullname);
+    const stringQs = qs.stringify({
+      email: email,
+      username: username,
+      password: password,
+      fullname: fullname,
+    });
+
+    console.log(stringQs);
     try {
       this.setState({ loading: true });
 
-      // console.log("ini jalan");
-      const { email, password, username, fullname } = values; //ini values dari formik
-      const formData = new FormData(); //buat formdata di body api
-      formData.append("email", email);
-      formData.append("fullname", fullname);
-      formData.append("username", username);
-      formData.append("password", password);
-      formData.append("images", images);
+      // const formData = new FormData(); //buat formdata di body api
+      // formData.append("email", email);
+      // formData.append("fullname", fullname);
+      // formData.append("username", username);
+      // formData.append("password", password);
+      // formData.append("images", images);
 
       const submit = await axios({
         method: "post",
         url: "https://nameless-temple-74030.herokuapp.com/register",
-        data: formData,
-        headers: { "Content-Type": "multipart/form-data" },
+        data: "string",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencode;charset=utf-8",
+        },
       });
 
       // const submit = await axios.post(
@@ -185,9 +199,9 @@ class Navigation extends Component {
       //     bio: "itulah bionya",
       //   }
       // );
-      localStorage.setItem("login", submit.data.access_token);
-      this.onChange("token", submit.data.access_token);
       console.log(submit);
+      // localStorage.setItem("login", submit.data.data.access_token);
+      // this.onChange("token", submit.data.data.access_token);
       this.setState({
         loading: false,
       });
@@ -199,16 +213,21 @@ class Navigation extends Component {
         icon: "success",
       });
     } catch (error) {
-      console.log("error", error.response);
+      console.log("error", `ERROR: ${JSON.stringify(error.response.data)}`);
 
-      const { msg } = error.response.data;
+      // const { msg } = error.response.data;
       this.setState({
         loading: false,
       });
 
+      // Swal.fire({
+      //   title: "Something Went Wrong",
+      //   text: msg,
+      //   icon: "error",
+      // });
       Swal.fire({
         title: "Something Went Wrong",
-        text: msg,
+        text: "try again maybe?",
         icon: "error",
       });
       // let { username, email } = error.response.data.errors;
@@ -372,17 +391,11 @@ class Navigation extends Component {
                 }, 400);
               }}
             >
-              {({
-                touched,
-                errors,
-                isSubmitting,
-                handleChange,
-                handleSubmit,
-              }) => (
+              {({ touched, errors, handleChange, handleSubmit }) => (
                 <Form
                   onSubmit={handleSubmit} // ini handle submitnya formik
                 >
-                  <Form.Group controlId="Image">
+                  {/* <Form.Group controlId="Image">
                     <Form.File>
                       <div className="preview-pp">
                         {this.state.image.url && (
@@ -418,7 +431,7 @@ class Navigation extends Component {
                         className="invalid-feedback"
                       />
                     </Form.File>
-                  </Form.Group>
+                  </Form.Group> */}
                   <Form.Group controlId="fullname">
                     <Form.Label>Full Name</Form.Label>
                     <Field
@@ -523,9 +536,8 @@ class Navigation extends Component {
                         variant="primary"
                         type="submit"
                         disabled={loading}
-                        className="ml-auto"
                       >
-                        {loading ? "please wait..." : "Submit"}
+                        {loading ? "Loading... " : "Submit"}
                       </Button>
                     </Col>
                   </Row>
@@ -605,15 +617,15 @@ class Navigation extends Component {
                     />
                   </Form.Group>
 
-                  <Button variant="primary" type="submit" disabled={loading}>
-                    {loading ? "please wait..." : "Submit"}
-                  </Button>
                   <p>
                     Dont have an account yet?{" "}
                     <a href="#" onClick={this.openSign}>
                       Sign up
                     </a>
                   </p>
+                  <Button variant="primary" type="submit" disabled={loading}>
+                    {loading ? "please wait..." : "Submit"}
+                  </Button>
                 </Form>
               )}
             </Formik>
