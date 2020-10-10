@@ -61,6 +61,7 @@ class Navigation extends Component {
     searchInput: "",
     redirect: false,
     token: localStorage.getItem("login"),
+    userLogin: localStorage.getItem("username"),
     loading: false,
     // image: {
     //   file: {},
@@ -68,41 +69,41 @@ class Navigation extends Component {
     // },
   };
 
-  componentDidMount = () => {
-    const { token } = this.state;
+  // componentDidMount = () => {
+  //   const { token } = this.state;
 
-    if (token) {
-      this.getCurrentUser();
-    }
-  };
+  //   if (token) {
+  //     this.getCurrentUser();
+  //   }
+  // };
 
   componentDidUpdate = (prevProps, prevState) => {
-    const { token } = this.state;
+    const { userLogin } = this.state;
 
-    if (token !== prevState.token) {
-      if (token) {
-        this.getCurrentUser();
+    if (userLogin !== prevState.userLogin) {
+      if (userLogin) {
+        this.render();
       }
     }
   };
 
-  getCurrentUser = async () => {
-    try {
-      const { token } = this.state;
-      const fetch = await axios.get("http://appdoto.herokuapp.com/api/user", {
-        headers: {
-          Authorization: token,
-        },
-      });
+  // getCurrentUser = async () => {
+  //   try {
+  //     const { token } = this.state;
+  //     const fetch = await axios.get("http://appdoto.herokuapp.com/api/user", {
+  //       headers: {
+  //         Authorization: token,
+  //       },
+  //     });
 
-      console.log("fetch", fetch);
-      this.setState({
-        dataLoggedIn: fetch.data.data,
-      });
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+  //     console.log("fetch", fetch);
+  //     this.setState({
+  //       dataLoggedIn: fetch.data.data,
+  //     });
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // };
 
   onChange = (name, e) => {
     this.setState({
@@ -113,36 +114,45 @@ class Navigation extends Component {
   login = async (values) => {
     try {
       const { email, password } = values;
+      const dataLogin = qs.stringify({
+        email: email,
+        password: password
+      })
+      console.log(dataLogin);
       this.setState({ loading: true });
-      const submit = await axios.post(
-        "http://appdoto.herokuapp.com/api/users/login",
-        {
-          email,
-          password,
-        }
+      const submit = await axios({
+        method: "post",
+        url: "https://nameless-temple-74030.herokuapp.com/login",
+        data: dataLogin,
+        headers: {
+          "content-Type": "application/x-www-form-urlencoded",
+        },
+      }
       );
-      localStorage.setItem("login", submit.data.data.token);
-      this.onChange("token", submit.data.data.token);
+      localStorage.setItem("login", submit.data.access_token);
+      localStorage.setItem("idUser", submit.data.User.id);
+      localStorage.setItem("username", submit.data.User.username);
+      this.onChange("token", submit.data.access_token);
       this.setState({
         loading: false,
       });
       this.handleCloseLogin();
-      const username = submit.data.data.username;
+      const username = submit.data.User.username;
       Swal.fire({
         title: "Login Success",
         text: `Welcome ${username}`,
         icon: "success",
       });
     } catch (error) {
-      console.log("error ini", error);
+      console.log("error ini", error.response);
       this.setState({
         loading: false,
       });
-      const msg = error.response.data.messages.errors;
-      console.log(msg);
+      const msg = error.response.data.msg;
+      // console.log(msg);
       Swal.fire({
         title: "Login Failed",
-        text: "Email or password invalid!",
+        text: msg,
         icon: "error",
       });
     }
@@ -172,38 +182,24 @@ class Navigation extends Component {
     console.log(stringQs);
     try {
       this.setState({ loading: true });
-
-      // const formData = new FormData(); //buat formdata di body api
-      // formData.append("email", email);
-      // formData.append("fullname", fullname);
-      // formData.append("username", username);
-      // formData.append("password", password);
-      // formData.append("images", images);
-
       const submit = await axios({
         method: "post",
         url: "https://nameless-temple-74030.herokuapp.com/register",
         data: stringQs,
         headers: {
-          "Content-Type": "application/x-www-form-urlencode;charset=utf-8",
+          "content-Type": "application/x-www-form-urlencoded",
         },
       });
-
-      // const submit = await axios.post(
-      //   "http://appdoto.herokuapp.com/api/users/",
-      //   {
-      //     email: email,
-      //     password: password,
-      //     username: username,
-      //     fullname: fullname,
-      //     bio: "itulah bionya",
-      //   }
-      // );
-      console.log(submit);
-      // localStorage.setItem("login", submit.data.data.access_token);
-      // this.onChange("token", submit.data.data.access_token);
+      console.log(submit.data);
+      localStorage.setItem("login", submit.data.acces_token);
+      localStorage.setItem("idUser", submit.data.User.id);
+      localStorage.setItem("username", submit.data.User.username);
+      this.onChange("token", submit.data.acces_token);
       this.setState({
         loading: false,
+        dataLoggedIn: {
+          username : submit.data.User.username,
+        }
       });
 
       this.handleCloseSign();
@@ -213,34 +209,26 @@ class Navigation extends Component {
         icon: "success",
       });
     } catch (error) {
-      console.log("error", `ERROR: ${JSON.stringify(error.response.data)}`);
-
-      // const { msg } = error.response.data;
+      console.log("error", error.response);
       this.setState({
         loading: false,
       });
 
-      // Swal.fire({
-      //   title: "Something Went Wrong",
-      //   text: msg,
-      //   icon: "error",
-      // });
-      Swal.fire({
-        title: "Something Went Wrong",
-        text: "try again maybe?",
-        icon: "error",
-      });
-      // let { username, email } = error.response.data.errors;
-      // console.log(username, email);
-      // username = username ? `username ${username}` : "";
-      // email = email ? `email ${email}` : "";
-
-      // Swal.fire({
-      //   title: "Something went Wrong",
-
-      //   text: email + username,
-      //   icon: "error",
-      // });
+      const msg = error.response.data.msg;
+      msg ? (
+        Swal.fire({
+          title: "Something Went Wrong",
+          text: msg,
+          icon: "error",
+        })
+      ) : (
+        Swal.fire({
+          title: "Something Went Wrong",
+          text: "try again maybe?",
+          icon: "error",
+        })
+      );
+      
     }
   };
 
@@ -309,8 +297,8 @@ class Navigation extends Component {
   };
 
   render() {
-    const { token, loading, searchInput } = this.state;
-    const usernameLog = this.state.dataLoggedIn.username;
+    const { token, loading, searchInput,userLogin } = this.state;
+    // const usernameLog = this.state.dataLoggedIn.username;
 
     return (
       <>
@@ -340,7 +328,7 @@ class Navigation extends Component {
               <Nav className="ml-auto">
                 {token ? (
                   <>
-                    <Link to="/user">Hello {usernameLog}</Link>
+                    <Link to="/user">Hello {userLogin}</Link>
                     <Button onClick={this.logout} variant="light">
                       logout
                     </Button>

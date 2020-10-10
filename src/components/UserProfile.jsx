@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image, Button} from "react-bootstrap";
 import imag from "../assets/img/noimg.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default class UserProfile extends Component {
   state = {
     token: localStorage.getItem("login"),
-    dataLoggedIn: {},
+    userId: localStorage.getItem("idUser"),
+    dataUser: {},
   };
 
   componentDidMount = () => {
@@ -17,29 +18,34 @@ export default class UserProfile extends Component {
   getCurrentUser = async () => {
     try {
       const { token } = this.state;
-      const fetch = await axios.get("http://appdoto.herokuapp.com/api/user", {
+      const fetch = await axios.get("https://nameless-temple-74030.herokuapp.com/user/id", {
         headers: {
-          Authorization: token,
+          access_token: token,
         },
       });
 
       console.log("fetch", fetch);
       this.setState({
-        dataLoggedIn: fetch.data.data,
+        dataUser: fetch.data.User_Data,
       });
     } catch (error) {
       console.log("error", error);
     }
   };
   render() {
-    const { username, bio, fullname, email } = this.state.dataLoggedIn;
+    const { username, image, fullname, email } = this.state.dataUser;
     return (
       <div>
         <Container className="mb-5">
           <h1 className="mt-5 mb-5">User Profile</h1>
           <Row>
             <Col md={4}>
-              <Image src={imag} alt="" fluid />
+              {image ? 
+              <Image src={`https://nameless-temple-74030.herokuapp.com/${image}`} alt="image profile" fluid />
+              :
+              <Image src={imag} alt="image profile" fluid />
+              
+            }
             </Col>
             <Col>
               <Row className="mb-2">
@@ -60,12 +66,7 @@ export default class UserProfile extends Component {
                 </Col>
                 <Col>: {email}</Col>
               </Row>
-              <Row className="mb-2">
-                <Col md={2}>
-                  <b>Bio</b>
-                </Col>
-                <Col>: {bio}</Col>
-              </Row>
+          <Button className="mt-3">Edit profile</Button>
             </Col>
           </Row>
         </Container>
