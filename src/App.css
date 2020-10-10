@@ -34,7 +34,7 @@ body {
   letter-spacing: 0.1em;
 }
 
-.navbar-nav a {
+/* .navbar-nav a {
   color: black !important;
   font-weight: bold;
   margin-right: 10px;
@@ -47,13 +47,15 @@ body {
   border-radius: 5px;
   transition: 2000;
   letter-spacing: 0.15em;
-}
+} */
 
-.navbar-nav a:hover {
+/* .navbar-nav a:hover {
   background: #7480f5;
   transform: scale(1.1);
+} */
+.ml-auto button .user-ico{
+  padding: 10px;
 }
-
 .navbar-nav button {
   background: none;
   color: black;

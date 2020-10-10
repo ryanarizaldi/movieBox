@@ -20,6 +20,10 @@ import logo from "../assets/img/moviebox.png";
 import { css } from "@emotion/core";
 import { RotateLoader } from "react-spinners/ClipLoader";
 import qs from "qs";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+
 
 const override = css`
   display: block;
@@ -77,15 +81,16 @@ class Navigation extends Component {
   //   }
   // };
 
-  componentDidUpdate = (prevProps, prevState) => {
-    const { userLogin } = this.state;
+  // componentDidUpdate = (prevProps, prevState) => {
+  //   const { userLogin } = this.state;
 
-    if (userLogin !== prevState.userLogin) {
-      if (userLogin) {
-        this.render();
-      }
-    }
-  };
+  //   if (userLogin !== prevState.userLogin) {
+  //     if (userLogin) {
+  //       this.forceUpdate();
+  //       console.log("force me daddy");
+  //     }
+  //   }
+  // };
 
   // getCurrentUser = async () => {
   //   try {
@@ -297,7 +302,7 @@ class Navigation extends Component {
   };
 
   render() {
-    const { token, loading, searchInput,userLogin } = this.state;
+    const { token, loading, searchInput, userLogin } = this.state;
     // const usernameLog = this.state.dataLoggedIn.username;
 
     return (
@@ -328,7 +333,11 @@ class Navigation extends Component {
               <Nav className="ml-auto">
                 {token ? (
                   <>
-                    <Link to="/user">Hello {userLogin}</Link>
+                    <Link to="/user">
+                    <Button className="user-ico">
+                      <FontAwesomeIcon icon={faUser} size="2x" spin/>
+                    </Button>
+                    </Link>
                     <Button onClick={this.logout} variant="light">
                       logout
                     </Button>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Container, Row, Col, Image, Button} from "react-bootstrap";
+import {Link} from "react-router-dom";
 import imag from "../assets/img/noimg.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -31,7 +32,8 @@ export default class UserProfile extends Component {
     } catch (error) {
       console.log("error", error);
     }
-  };
+  }
+
   render() {
     const { username, image, fullname, email } = this.state.dataUser;
     return (
@@ -40,11 +42,7 @@ export default class UserProfile extends Component {
           <h1 className="mt-5 mb-5">User Profile</h1>
           <Row>
             <Col md={4}>
-              {image ? 
-              <Image src={`https://nameless-temple-74030.herokuapp.com/${image}`} alt="image profile" fluid />
-              :
-              <Image src={imag} alt="image profile" fluid />
-              
+              {image ? <Image src={`https://nameless-temple-74030.herokuapp.com/public/jurica-koletic-7YVZYZeITc8-unsplash.jpg`} alt="image profile" fluid /> : <Image src={imag} alt="image profile" fluid />
             }
             </Col>
             <Col>
@@ -66,7 +64,9 @@ export default class UserProfile extends Component {
                 </Col>
                 <Col>: {email}</Col>
               </Row>
-          <Button className="mt-3">Edit profile</Button>
+              <Link to="/user/edit">
+                <Button className="mt-3">Edit profile</Button>
+              </Link>
             </Col>
           </Row>
         </Container>

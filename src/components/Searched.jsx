@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import qs from "qs";
 import { Link } from "react-router-dom";
 import { Container, Card, Pagination, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,26 +12,33 @@ export default class Searched extends Component {
     totRes: 0,
   };
 
-  getMovie = async (num) => {
+  getMovie = async () => {
+    const { keyword } = this.props;
+    const body = qs.stringify({
+      search: keyword,
+    })
     try {
-      const { keyword } = this.props;
-      const movie = await axios.get(
-        `https://api.themoviedb.org/3/search/movie?api_key=0f4cb6189e20110c05e4b524ae7821ac&query=${keyword}&page=${num}`
-      );
+      const movie = await axios({
+        method: "get",
+        url: `https://nameless-temple-74030.herokuapp.com/search`,
+        data: body,
+        header : "application/x-www-form-urlencoded",
+        
+      });
 
       // console.log(movie);
 
       this.setState({
-        movies: movie.data.results,
-        totRes: movie.data.total_pages,
+        movies: movie.data,
+        // totRes: movie.data.total_pages,
       });
     } catch (error) {
-      console.log("error", error);
+      console.log("error", error.response);
     }
   };
 
   componentDidMount = () => {
-    this.getMovie(this.state.currPage);
+    this.getMovie();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -38,7 +46,7 @@ export default class Searched extends Component {
     const { keyword } = this.props;
     if (keyword !== prevProps.keyword) {
       if (keyword) {
-        this.getMovie(1);
+        this.getMovie();
         this.setState({ currPage: 1 });
       }
     }
@@ -54,8 +62,8 @@ export default class Searched extends Component {
     const { movies, currPage, totRes } = this.state;
     return (
       <div className="search">
-        <Container>
-          <h1>You Are Searching for "{keyword}" </h1>
+        <Container className="mt-5 mb-5">
+          <h1 className="mb-5">You Are Searching for "{keyword}" </h1>
           <Row>
             {movies.length ? (
               movies.map((mov) => (
@@ -84,7 +92,8 @@ export default class Searched extends Component {
               </Col>
             )}
           </Row>
-          <Row id="page">
+          {movies.length ? (
+            <Row id="page">
             <Pagination>
               <Pagination.First
                 onClick={() => this.paginate(1)}
@@ -114,6 +123,7 @@ export default class Searched extends Component {
               />
             </Pagination>
           </Row>
+          ): <div className="mb-5"></div>}
         </Container>
       </div>
     );
