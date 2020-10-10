@@ -1,6 +1,6 @@
 body {
   font-family: "Open Sans", sans-serif !important;
-  background: #e1f2fe;
+  background: white;
 }
 
 /* modal signup */
@@ -64,11 +64,7 @@ body {
 
 /* nav login signup */
 .ml-auto .btn {
-<<<<<<< HEAD
-  background: #e1f2fe;
-=======
   background: #DEE2E3ff;
->>>>>>> f3f146de03f3e69a2d82cf9be50fc7c8b7785b33
   font-size: 0.9em;
   font-weight: bold;
   border-radius: 5px;
