@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Button, Row, Col, Card, Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import noimg from "../assets/img/noimg.png";
 
 export default class Categories extends Component {
   state = {
@@ -13,41 +14,57 @@ export default class Categories extends Component {
     totRes: 0,
   };
 
+  getMovie = async () => {
+    const {currPage} = this.state;
+    try {
+    const comeToPapa = await axios.get(`https://nameless-temple-74030.herokuapp.com/home/${currPage}`);
+
+    console.log(comeToPapa.data);
+    this.setState({
+      movies: comeToPapa.data.document,
+      totRes: comeToPapa.data.total_pages,
+    })
+    } catch (error) {
+      console.log("error get movie", error);
+    }
+  }
+
   componentDidMount = () => {
     this.getMovie();
     this.getGenre();
   };
-
-  getMovie = () => {
-    const { option } = this.state;
-    if (option === 0) {
-      console.log("masuk option");
-      fetch(
-        "https://api.themoviedb.org/3/movie/popular?api_key=0f4cb6189e20110c05e4b524ae7821ac"
-      )
-        .then((response) => response.json())
-        .then((json) => {
-          this.setState({
-            movies: json.results,
-            totRes: json.total_pages,
-          });
-        });
-    } else {
-      console.log("masuk option custom");
-      fetch(
-        `https://api.themoviedb.org/3/discover/movie?api_key=0f4cb6189e20110c05e4b524ae7821ac&with_genres=${option}`
-      )
-        .then((response) => response.json())
-        .then((json) => {
-          this.setState({
-            movies: json.results,
-            totRes: json.total_pages,
-          });
-        });
-    }
-  };
+// get movie yg lama
+  // getMovie = () => {
+  //   const { option } = this.state;
+  //   if (option === 0) {
+  //     console.log("masuk option");
+  //     fetch(
+  //       "https://api.themoviedb.org/3/movie/popular?api_key=0f4cb6189e20110c05e4b524ae7821ac"
+  //     )
+  //       .then((response) => response.json())
+  //       .then((json) => {
+  //         this.setState({
+  //           movies: json.results,
+  //           totRes: json.total_pages,
+  //         });
+  //       });
+  //   } else {
+  //     console.log("masuk option custom");
+  //     fetch(
+  //       `https://api.themoviedb.org/3/discover/movie?api_key=0f4cb6189e20110c05e4b524ae7821ac&with_genres=${option}`
+  //     )
+  //       .then((response) => response.json())
+  //       .then((json) => {
+  //         this.setState({
+  //           movies: json.results,
+  //           totRes: json.total_pages,
+  //         });
+  //       });
+  //   }
+  // };
 
   //INI TETEP DITULIS PREVPROPSNYA MESKIPUN GA DIPAKE
+  
   componentDidUpdate = (prevProps, prevState) => {
     const { option } = this.state;
     if (option !== prevState.option) {
@@ -75,26 +92,21 @@ export default class Categories extends Component {
       });
   };
 
+    paginate = async (pageNum) => {
+      try {
+        const res = await axios.get(`https://nameless-temple-74030.herokuapp.com/home/${pageNum}`);
+        this.setState({
+          movies: res.data.document,
+          currPage: pageNum,
+        });
+        window.scrollTo(0, 700)
+      } catch (error) {
+        console.log("error ini paginatenya", error);
+      }
+    } 
+
   // fungsi pagination buat ngubah page result dari fetch
-  paginate = async (pageNum) => {
-    const { option } = this.state;
-    try {
-      const data = await axios.get(
-        option === 0
-          ? `https://api.themoviedb.org/3/movie/popular?api_key=0f4cb6189e20110c05e4b524ae7821ac&page=${pageNum}`
-          : `https://api.themoviedb.org/3/discover/movie?api_key=0f4cb6189e20110c05e4b524ae7821ac&with_genres=${option}&page=${pageNum}`
-      );
-      this.setState({
-        movies: data.data.results,
-        currPage: pageNum,
-      });
-      window.scrollTo(0, 700);
-    } catch (error) {
-      console.log("error: ", error);
-    }
-  };
-  // fungsi dibawah gausah dipake soalnya buat manggil previous page tinggal diubah aja parameter fungsi diatas
-  // prevPage = async (pageNum) => {
+  // paginate = async (pageNum) => {
   //   const { option } = this.state;
   //   try {
   //     const data = await axios.get(
@@ -106,12 +118,12 @@ export default class Categories extends Component {
   //       movies: data.data.results,
   //       currPage: pageNum,
   //     });
+  //     window.scrollTo(0, 700);
   //   } catch (error) {
   //     console.log("error: ", error);
   //   }
   // };
-
-  //
+  
   firstPagi = async () => {
     this.paginate(1);
   };
@@ -133,7 +145,7 @@ export default class Categories extends Component {
           >
             Popular
           </Button>
-          {this.state.genre.slice(0, 20).map((gen) => (
+          {this.state.genre.map((gen) => (
             <Button
               className={active === gen.id ? `aktip` : ""}
               onClick={() => this.genre(gen.id)}
@@ -145,17 +157,22 @@ export default class Categories extends Component {
         <div className="movie-by-genre">
           <Row>
             {this.state.movies ? (
-              this.state.movies.slice(0, 20).map((mov) => (
+              this.state.movies.map((mov) => (
                 <Col md="3">
                   <Link to={`/detail/${mov.id}/overview`}>
                     <Card>
                       <Card.Img
                         variant="top"
-                        src={"http://image.tmdb.org/t/p/w500" + mov.poster_path}
+                        src={
+                          mov.poster
+                            ? mov.poster
+                            : noimg
+                        }
+                        alt="movie poster"
                       />
                       <Card.Body>
-                        <Card.Title>{mov.original_title}</Card.Title>
-                        <Card.Text>{mov.release_date.slice(0, 4)}</Card.Text>
+                        <Card.Title>{mov.title}</Card.Title>
+                        <Card.Text>{mov.release_date?.slice(0, 4)}</Card.Text>
                       </Card.Body>
                     </Card>
                   </Link>

@@ -6,24 +6,19 @@ import ReactStars from "react-rating-stars-component";
 export default class Review extends Component {
   state = {
     review: "",
-    ratings: "",
+    ratings: 0,
     reviewee: [],
   };
 
-  componentDidUpdate = (prevProps, prevState) => {
-    if (this.state.reviewee !== prevState.reviewee) {
-      this.render();
-    }
-  };
+  // componentDidUpdate = (prevProps, prevState) => {
+  //   if (this.state.reviewee !== prevState.reviewee) {
+  //     this.render();
+  //   }
+  // };
 
   handleSubmit = (e) => {
     e.preventDefault();
     const { review, ratings, reviewee } = this.state;
-    // Swal.fire({
-    //   title: "Success Post a Review",
-    //   text: `${review}, ${ratings} Star!`,
-    //   icon: "success",
-    // });
     if (review === "") {
       Swal.fire({
         title: "Error!",
@@ -39,7 +34,7 @@ export default class Review extends Component {
       this.setState({
         reviewee: [...reviewee, { id: 1, text: review, rate: ratings }],
         review: "",
-        ratings: ""
+        ratings: "",
       });
       console.log(reviewee)
     }
@@ -72,7 +67,7 @@ export default class Review extends Component {
               <InputGroup>
                 <FormControl
                   placeholder="Leave a review"
-                  value={this.state.review}
+                  value={review}
                   onChange={this.handleChange}
                 />
               </InputGroup>

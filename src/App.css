@@ -1,6 +1,22 @@
 body {
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: "Open Sans", sans-serif !important;
   background: white;
+}
+
+/* modal signup */
+
+.preview-pp {
+  margin: auto;
+  width: 150px;
+  /* object-fit: cover;
+  object-position: 5% 20%; */
+}
+
+.preview-name {
+  /* margin: auto; */
+  /* padding-left: 230px; dasar begooo */
+  text-align: center;
+  margin: 10px 0 10px 0;
 }
 
 /* navbar */
@@ -19,7 +35,23 @@ body {
 }
 
 .navbar-nav a {
-  color: white !important;
+  color: black !important;
+  font-weight: bold;
+  margin-right: 10px;
+  margin-top: 5px;
+  text-decoration: none;
+  background: #e1f2fe;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  transition: 2000;
+  letter-spacing: 0.15em;
+}
+
+.navbar-nav a:hover {
+  background: #7480f5;
+  transform: scale(1.1);
 }
 
 .navbar-nav button {
@@ -73,7 +105,7 @@ body {
 
 .modal-header {
   font-weight: bold;
-  letter-spacing: 0.20em;
+  letter-spacing: 0.2em;
 }
 
 .modal-content .form-label {
@@ -139,7 +171,7 @@ body {
 .card:hover {
   transform: scale(1.05);
   cursor: pointer;
-  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2)
+  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2);
 }
 
 .card-img-top {
@@ -176,7 +208,7 @@ body {
   background: #F4E3DBff;
   margin-right: 12px;
   margin-bottom: 10px;
-  transition: all .4s;
+  transition: all 0.4s;
   letter-spacing: 0.1em;
 }
 
@@ -195,7 +227,6 @@ body {
 
 .movie-by-genre {
   margin-top: 48px;
-
 }
 
 /* pagination */
@@ -225,15 +256,15 @@ body {
   border-color: #ddd;
 }
 
-.pagination>.active>a {
+.pagination > .active > a {
   color: white;
-  background-color: #5A4181 !Important;
-  border: solid 1px #5A4181 !Important;
+  background-color: #5a4181 !important;
+  border: solid 1px #5a4181 !important;
 }
 
-.pagination>.active>a:hover {
-  background-color: #5A4181 !Important;
-  border: solid 1px #5A4181;
+.pagination > .active > a:hover {
+  background-color: #5a4181 !important;
+  border: solid 1px #5a4181;
 }
 
 .page-item {
@@ -428,22 +459,22 @@ body {
   flex-direction: column;
 }
 
-.movie-badge .button-badge{
+.movie-badge .button-badge {
   display: flex;
   flex-direction: row;
 }
 
-.movie-badge .button-badge .badge{
+.movie-badge .button-badge .badge {
   padding: 8px 16px;
   margin-right: 26px;
 }
 
-.movie-badge .button-badge .badge a{
-  color:grey;
+.movie-badge .button-badge .badge a {
+  color: grey;
 }
 
-.movie-badge .button-badge .badge:hover{
-  background: #3F7D7Aff;;
+.movie-badge .button-badge .badge:hover {
+  background: #3f7d7aff;
 }
 
 /* Overview */
@@ -459,24 +490,24 @@ body {
   flex-direction: row;
 }
 
-.trailer h1:after{
+.trailer h1:after {
   content: "";
   flex: 1 1;
-  border-bottom: 2px solid #A7AFB2;
+  border-bottom: 2px solid #a7afb2;
   margin: 14px;
   margin-left: 10px;
 }
 
-.synopsis h1{
+.synopsis h1 {
   margin-bottom: 20px;
 }
 
-.synopsis p{
+.synopsis p {
   text-align: justify;
   margin-bottom: 32px;
 }
 
-.movie-info h1{
+.movie-info h1 {
   margin-bottom: 36px;
 }
 
@@ -511,7 +542,6 @@ body {
   font-size: 14px;
   text-align: center;
 }
-
 
 /* Review */
 .content-badge {
