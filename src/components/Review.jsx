@@ -90,7 +90,7 @@ export default class Review extends Component {
             {reviewee.map((rev) => (
               <Col lg="12">
                 <b>Yudi Kaka</b>
-                <ReactStars size={20} value={rev.rate}  />
+                <ReactStars size={20} value={rev.rate} edit={false} />
                 <p>{rev.text}</p>
               </Col>
             ))}

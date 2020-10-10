@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Container, Image, Button, Badge } from "react-bootstrap";
+import ReactStars from "react-rating-stars-component";
 import Overview from "./Overview";
 import Character from "./Character";
 import Review from "./Review";
@@ -63,7 +64,6 @@ class DetailMovie extends Component {
             </div>
           </div>
 
-          <Router>
             <div className="movie-badge">
               <div className="button-badge">
                 <h5>
@@ -87,19 +87,21 @@ class DetailMovie extends Component {
               <Switch>
                 <Route
                   path={`/detail/${id}/overview`}
+                  exact
                   component={() => <Overview movie={this.state.movies} />}
                 />
                 <Route
                   path={`/detail/${id}/character`}
+                  exact
                   component={() => <Character movie={this.state.movies} />}
                 />
                 <Route
                   path={`/detail/${id}/review`}
+                  exact
                   component={() => <Review movie={this.state.movies} />}
                 />
               </Switch>
             </div>
-          </Router>
         </Container>
       </div>
     );

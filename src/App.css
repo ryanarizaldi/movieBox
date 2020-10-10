@@ -32,7 +32,7 @@ body {
 
 /* nav login signup */
 .ml-auto .btn {
-  background: #E1F2FE;
+  background: #DEE2E3ff;
   font-size: 0.9em;
   font-weight: bold;
   border-radius: 5px;
@@ -59,7 +59,7 @@ body {
 .navbar .form-inline button {
   border: none;
   color: black;
-  background: #E1F2FE;
+  background: #DEE2E3ff;
   font-size: 0.9em;
   font-weight: bold;
   border-radius: 5px;
@@ -68,7 +68,7 @@ body {
 
 /* modal */
 .modal-content {
-  background: #E1F2FE;
+  background: #F4E3DBff;
 }
 
 .modal-header {
@@ -82,12 +82,22 @@ body {
 
 .modal-content .btn {
   border: none;
-  background: #7480f5;
+  background:#BC8F8Bff;
   font-size: 0.9em;
   font-weight: bold;
   border-radius: 5px;
   transition: all 2000;
   letter-spacing: 0.15em;
+}
+
+.align-items-center p a {
+  color: #BC8F8Bff;
+  font-weight: 600;
+}
+
+.align-items-center p {
+  margin-top: 10px;
+  letter-spacing: 0.01em;
 }
 
 .modal-content .btn:hover {
@@ -109,20 +119,6 @@ body {
 
 .carousel-indicators {
   padding-bottom: 10px;
-}
-
-/* footer */
-.footer {
-  /* position: relative; */
-  margin-top: 200px;
-  height: 200px;
-  left: 0px;
-  right: 0;
-  bottom: 0px;
-  background: #C0CAC9ff;
-  padding: 67.4px 568px 24.47px 568px;
-  color: #28615Bff;
-  text-align: center;
 }
 
 /* card */
@@ -167,13 +163,16 @@ body {
 /* button show by */
 .show-by h1 {
   margin-top: 30px;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 24px;
+  color: #BC8F8Bff;
+  text-shadow: 3px 2px 1px #F4E3DBff;
 }
 
 .show-by .btn {
   border: none;
   color: black;
+  font-weight: 500;
   background: #F4E3DBff;
   margin-right: 12px;
   margin-bottom: 10px;
@@ -240,43 +239,75 @@ body {
 .page-item {
   padding: 5px;
 }
-
-
+/* -------------------------------------------------------------------- */
 
 /* footer */
 .footer {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   height: 400px;
-  margin: 0;
+  margin-top: 200px;
+  left: 0px;
+  right: 0;
+  bottom: 0px;
+  background: #DEE2E3ff;
+  padding: 67.4px 568px 24.47px 568px;
+  color: #28615Bff;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 510;
+  letter-spacing: 0.1em;
 }
+
+/* .footer>hr {
+  border-top: 2px solid #28615Bff;
+  border-bottom: 2px solid #28615Bff;
+} */
 
 .top {
   display: flex;
   justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  height: 250px;
 }
 
 .name {
   display: flex;
   flex-direction: column;
-  /* position: relative;
-  right: 200px; */
-  width: 700px;
+  position: relative;
+  right: 60px;
+  width: 550px;
   padding-left: 100px;
   padding-right: 100px;
-  text-align: left;
-  margin: 0;
+  text-align: justify;
+  margin: 0 auto;
+}
+
+.name img {
+  width: 190px;
+  height: 60px;
+  margin-bottom: 12px;
 }
 
 .about {
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
-  width: 300px;
+  width: 400px;
   text-align: left;
   padding-right: 24px;
+  margin: 0 auto;
+  left: 40px;
+}
+
+.about a {
+  color: #28615Bff;
+  margin-bottom: 6px;
 }
 
 .images {
@@ -285,11 +316,53 @@ body {
   justify-content: center;
   width: 300px;
   text-align: left;
+  margin: 0 auto;
 }
 
-.images .img {
-  width: 100px;
+.images .download img {
+  width: 120px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.download img.iphone {
+  position: relative;
+  top: 3px;
+  margin-left: 14px;
+}
+
+.images .sosmed img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.download h5, .sosmed h5 {
+  font-weight: bold;
+  margin-bottom: 14px;
+}
+
+.download {
+  display: flex;
+  flex-direction: column;
   height: 100px;
+}
+
+.download .download-app{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.copy {
+  width: 400px;
+}
+
+.copy h6{
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0.1em;
 }
 
 /* detail movie */

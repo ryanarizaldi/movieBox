@@ -502,16 +502,17 @@ class Navigation extends Component {
                       className="invalid-feedback"
                     />
                   </Form.Group>
-
-                  <Button variant="primary" type="submit" disabled={loading}>
-                    {loading ? "please wait..." : "Submit"}
-                  </Button>
-                  <p>
-                    Dont have an account yet?{" "}
-                    <a href="#" onClick={this.openSign}>
-                      Sign up
-                    </a>
-                  </p>
+                  <div className="align-items-center">
+                    <Button variant="primary" type="submit" disabled={loading}>
+                      {loading ? "please wait..." : "Submit"}
+                    </Button>
+                    <p>
+                      Dont have an account yet?{" "}
+                      <a href="#" onClick={this.openSign}>
+                        Sign up
+                      </a>
+                    </p>
+                  </div>
                 </Form>
               )}
             </Formik>
