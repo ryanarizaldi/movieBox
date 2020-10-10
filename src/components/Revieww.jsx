@@ -48,20 +48,20 @@
 //                             </InputGroup>
 //                         </Col>
 
-//                         {/* Nampilin Rating */}
-//                         {rating ? rating.map(item => {
-//                         let rate = []
-//                         let tracker = item.rate;
-//                         for(let i = 0; i < item.rate; i++){
-//                             if(tracker < 1 && tracker > 0){
-//                             // Untuk desimal
-//                             rate.push(0)
-//                             }else{
-//                             // Untuk bilangan bulat
-//                             rate.push(1)
-//                             }
-//                             tracker--;
-//                         }
+                        // {/* Nampilin Rating */}
+                        // {rating ? rating.map(item => {
+                        // let rate = []
+                        // let tracker = item.rate;
+                        // for(let i = 0; i < item.rate; i++){
+                        //     if(tracker < 1 && tracker > 0){
+                        //     // Untuk desimal
+                        //     rate.push(0)
+                        //     }else{
+                        //     // Untuk bilangan bulat
+                        //     rate.push(1)
+                        //     }
+                        //     tracker--;
+                        // }
 
 //                         return(
 //                             <React.Fragment>

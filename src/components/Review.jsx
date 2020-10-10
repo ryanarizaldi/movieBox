@@ -28,7 +28,7 @@ export default class Review extends Component {
     } else {
       Swal.fire({
         title: "Review Posted",
-        text: `you just input ${review}`,
+        text: `you just input ${review} ${ratings} star!`,
         icon: "success",
       });
       this.setState({
@@ -36,6 +36,7 @@ export default class Review extends Component {
         review: "",
         ratings: "",
       });
+      console.log(reviewee)
     }
   };
 
@@ -80,13 +81,15 @@ export default class Review extends Component {
                 Submit
               </Button>
             </Col>
+            
             {reviewee.map((rev) => (
               <Col lg="12">
                 <b>Yudi Kaka</b>
-                <ReactStars value={rev.rate} />
+                <ReactStars size={20} value={rev.rate} edit={false} />
                 <p>{rev.text}</p>
               </Col>
             ))}
+
             <Col lg="12">
               <b>Yudi Kaka</b>
               <p>

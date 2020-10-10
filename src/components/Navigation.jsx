@@ -306,7 +306,7 @@ class Navigation extends Component {
           <Container>
             <Navbar.Brand>
               <Link to="/">
-                <img src={logo} alt="logo" />
+                <Image src={logo} />
               </Link>
             </Navbar.Brand>
 
