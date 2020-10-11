@@ -31,19 +31,13 @@ export default class Categories extends Component {
           movies: comeToPapa.data.document,
           totRes: comeToPapa.data.total_pages,
         })
-      } else{
-        const comeToPapa = await axios({
-          method: "get",
-          url: "https://nameless-temple-74030.herokuapp.com/movie/category",
-          data: body,
-          headers: {
-          "content-Type": "application/x-www-form-urlencoded",
-          },
-        });
+      } else {
+        console.log("masuk categoy");
+        const comeToPapa = await axios.get(`https://nameless-temple-74030.herokuapp.com/movie/category/${option}`);
 
         console.log(comeToPapa.data);
         this.setState({
-          movies: comeToPapa.data.document,
+          movies: comeToPapa.data,
           totRes: comeToPapa.data.total_pages,
         })
       }

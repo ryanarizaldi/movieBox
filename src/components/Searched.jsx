@@ -19,7 +19,7 @@ export default class Searched extends Component {
     })
     try {
       const movie = await axios({
-        method: "get",
+        method: "post",
         url: `https://nameless-temple-74030.herokuapp.com/search`,
         data: body,
         header : "application/x-www-form-urlencoded",
@@ -73,13 +73,13 @@ export default class Searched extends Component {
                       <Card.Img
                         variant="top"
                         src={
-                          mov.poster_path
-                            ? "http://image.tmdb.org/t/p/w500" + mov.poster_path
+                          mov.poster
+                            ? mov.poster
                             : "noImg"
                         }
                       />
                       <Card.Body>
-                        <Card.Title>{mov.original_title}</Card.Title>
+                        <Card.Title>{mov.title}</Card.Title>
                         <Card.Text>{mov.release_date?.slice(0, 4)}</Card.Text>
                       </Card.Body>
                     </Card>

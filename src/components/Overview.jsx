@@ -8,33 +8,33 @@ class Overview extends Component {
     crews:[]
   }
 
-  componentDidMount = async () => {
-    try {
-      const { crew } = this.state;
-      const id = this.props.movie.id;
-      const fetch = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=0f4cb6189e20110c05e4b524ae7821ac`
-      );
+  // componentDidMount = async () => {
+  //   try {
+  //     const { crew } = this.state;
+  //     const id = this.props.movie.id;
+  //     const fetch = await axios.get(
+  //       `https://api.themoviedb.org/3/movie/${id}/credits?api_key=0f4cb6189e20110c05e4b524ae7821ac`
+  //     );
 
-      console.log("fetch", fetch);
-      this.setState({
-        crews: fetch.data.crew,
-      });
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+  //     console.log("fetch", fetch);
+  //     this.setState({
+  //       crews: fetch.data.crew,
+  //     });
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // };
 
     render() {
-      const { overview, release_date, budget } = this.props.movie
+      const { synopsis, release_date, director, featured_song, budget } = this.props.movie
       // const { job, name } = this.state.crews;
-      const { crews } = this.state;
+      //const { crews } = this.state;
 
         return (
           <div className="trailer">
             <div className="synopsis">
               <h1>Synopsis</h1>
-              <p>{ overview }</p>
+              <p>{ synopsis }</p>
             </div>
 
             <div className="movie-info">
@@ -47,16 +47,12 @@ class Overview extends Component {
                 <Col lg="2">
                   <b>Director</b>
                 </Col>
-                <Col lg="10">:  
-                  {crews.map ((crew) => (crew.job === "Director") ? (crew.name) : "")} </Col>
+                <Col lg="10">: {director} </Col>
                 
                 <Col lg="2">
                   <b>Featured Song</b>
                 </Col>
-                <Col lg="10">
-                  : Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Tempora, optio.
-                </Col>
+                <Col lg="10">: {featured_song} </Col>
                 <Col lg="2">
                   <b>Budget</b>
                 </Col>
