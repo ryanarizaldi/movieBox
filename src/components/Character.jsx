@@ -6,50 +6,60 @@ import noimg from "../assets/img/noimg.png";
 export default class Character extends Component {
   state = {
     casts: [],
+    token: localStorage.getItem("login"),
   };
 
   componentDidMount = async () => {
     try {
       const id = this.props.movie.id;
       const fetch = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=0f4cb6189e20110c05e4b524ae7821ac`
+        `https://nameless-temple-74030.herokuapp.com/moviechar/find/${id}`
       );
 
       console.log("fetch", fetch);
       this.setState({
-        casts: fetch.data.cast,
+        casts: fetch.data.characters,
       });
     } catch (error) {
       console.log("error", error);
     }
   };
+
+  getChar = async () => {
+    try {
+      const id = this.props.movie.id;
+      await axios({
+        method: "post",
+        url: `https://nameless-temple-74030.herokuapp.com/moviechar/find/${id}`,
+        headers: {
+          "access_token": this.state.token,
+        },
+      })
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+
   render() {
-    // const { image, name } = this.props.movie
+    const { image, name } = this.state.casts;
     // console.log(this.props.movie);
-    const { casts } = this.state;
+    // const { casts } = this.state;
     return (
       <div className="main-char">
         <div className="character">
           <Row>
-            {casts.slice(0, 10).map((cast) => (
               <Col md="2">
                 <Card>
                   <Card.Img
                     variant="top"
-                    src={
-                      cast.profile_path
-                        ? `http://image.tmdb.org/t/p/original${cast.profile_path}`
-                        : noimg
-                    }
+                    src={image ? image : `htpps://s3-ap-southeast-1.amazonaws.com/upcode/static/default-image.jpg`}
                   />
                   <Card.Body>
-                    <Card.Title>{cast.name}</Card.Title>
-                    <p>as</p>
-                    <Card.Title>{cast.character}</Card.Title>
+                    <Card.Title>{name ? name : "Not Found"}</Card.Title>
                   </Card.Body>
                 </Card>
               </Col>
-            ))}
           </Row>
         </div>
       </div>
