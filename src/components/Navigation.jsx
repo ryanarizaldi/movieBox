@@ -511,10 +511,10 @@ class Navigation extends Component {
                     />
                   </Form.Group>
                   <Row>
-                    <Col md={10}>
+                    <Col md={10} >
                       <p>
                         Already have an Account?{" "}
-                        <a href="#" onClick={this.openLogin}>
+                        <a id="txt" href="#" onClick={this.openLogin}>
                           Login
                         </a>
                       </p>
@@ -607,7 +607,7 @@ class Navigation extends Component {
 
                   <p>
                     Dont have an account yet?{" "}
-                    <a href="#" onClick={this.openSign}>
+                    <a id="txt" href="#" onClick={this.openSign}>
                       Sign up
                     </a>
                   </p>
