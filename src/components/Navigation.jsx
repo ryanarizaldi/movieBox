@@ -144,10 +144,15 @@ class Navigation extends Component {
       this.handleCloseLogin();
       const username = submit.data.User.username;
       Swal.fire({
-        title: "Login Success",
-        text: `Welcome ${username}`,
-        icon: "success",
-      });
+        position: 'top-mid',
+        icon: 'success',
+        title: `Welcome ${username}`,
+        showConfirmButton: false,
+        timer: 1500
+      }).then(function(){ 
+        window.location.reload();
+        })
+      // window.location.reload(false)
     } catch (error) {
       console.log("error ini", error.response);
       this.setState({
@@ -212,7 +217,9 @@ class Navigation extends Component {
         title: "Sign up Success",
         text: "No need to Login. Enjoy our app",
         icon: "success",
-      });
+      }).then(function(){ 
+        window.location.reload();
+        });
     } catch (error) {
       console.log("error", error.response);
       this.setState({
@@ -253,6 +260,7 @@ class Navigation extends Component {
           password: "",
           token: null,
         });
+        window.location.reload();
       }
     });
   };
