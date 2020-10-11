@@ -21,8 +21,9 @@ body {
 
 /* navbar */
 .navbar {
-  background: #3F7D7Aff;
+  background: #4D908E;
   height: 80px;
+  position: relative;
 }
 
 .navbar-brand a {
@@ -37,20 +38,24 @@ body {
 .navbar-nav a {
   color: black !important;
   font-weight: bold;
-  margin-right: 10px;
+  margin-right: 5px;
   margin-top: 5px;
   text-decoration: none;
-  background: #e1f2fe;
+  background: #DEE2E3ff;
   border-radius: 5px;
-  padding: 5px;
-  font-size: 1.2em;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9em;
+  box-sizing: border-box;
   border-radius: 5px;
   transition: 2000;
   letter-spacing: 0.15em;
+  position: relative;
+  right: 10px;
+  /* height: 3px; */
 }
 
 .navbar-nav a:hover {
-  background: #7480f5;
+  background: #28615Bff;
   transform: scale(1.1);
 }
 
@@ -58,9 +63,18 @@ body {
   background: none;
   color: black;
   /* background: #F4A261; */
+  position: relative;
+  top: 5px;
   border: none;
   margin-right: 10px;
+  height: 34px;
 }
+
+/* .ml-auto a {
+  font-size: 0.9em;
+  padding: 0.600rem 0.9rem;
+  margin-right: px;
+} */
 
 /* nav login signup */
 .ml-auto .btn {
@@ -122,7 +136,7 @@ body {
   letter-spacing: 0.15em;
 }
 
-.align-items-center p a {
+a#txt {
   color: #BC8F8Bff;
   font-weight: 600;
 }
@@ -135,6 +149,7 @@ body {
 .modal-content .btn:hover {
   transform: scale(1.1);
 }
+/* ------------------------------------ */
 
 /* carousel */
 /* .carousel {
@@ -152,6 +167,7 @@ body {
 .carousel-indicators {
   padding-bottom: 10px;
 }
+/* -------------------------------------------- */
 
 /* card */
 .movie-by-genre a {
@@ -191,6 +207,7 @@ body {
   font-weight: bold;
   margin-bottom: 15px;
 }
+/* ------------------------------------- */
 
 /* button show by */
 .show-by h1 {
@@ -228,6 +245,7 @@ body {
 .movie-by-genre {
   margin-top: 48px;
 }
+/* ---------------------------------------------------- */
 
 /* pagination */
 #page {
@@ -395,6 +413,7 @@ body {
   font-weight: bold;
   letter-spacing: 0.1em;
 }
+/* ----------------------------------- */
 
 /* detail movie */
 .main-content {
@@ -416,11 +435,19 @@ body {
   position: relative;
   color: black;
   margin-top: 72px;
+  /* height: 26rem; */
 }
 
-.container .content img {
-  width: 100%;
+.container .content .detail-img {
+  width: 50%;
+  /* height: 33rem; */
+}
+
+.container .content .detail-img img {
+  width: auto;
   height: auto;
+  max-width: 33rem;
+  max-height: 33rem;
   object-fit: cover;
   /* filter: brightness(50%); */
 }
@@ -430,6 +457,8 @@ body {
   flex-direction: column;
   text-align: justify;
   margin-left: 58px;
+  width: 50%;
+  /* max-height: 34rem; */
   /* position: absolute;
   align-items: flex-start; */
 }
@@ -464,18 +493,34 @@ body {
   flex-direction: row;
 }
 
-.movie-badge .button-badge .badge {
-  padding: 8px 16px;
+.movie-badge .button-badge .link:hover {
+  background: #BC8F8Bff;
+}
+
+.movie-badge .button-badge .link {
+  padding: 5px 16px;
+  padding-bottom: 0;
   margin-right: 26px;
+  background: #F4E3DBff;
+  box-sizing: border-box;
+  height: 2.1rem;
+  border-radius: 10rem;
+  text-decoration: none;
+  color: black;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  transition: all 0.2s ease-in;
 }
 
-.movie-badge .button-badge .badge a {
-  color: grey;
+.movie-badge .button-badge .active {
+  cursor: not-allowed;
+  pointer-events: none;
+  font-weight: bold;
+  color: white;
+  background: #BC8F8Bff;
 }
-
-.movie-badge .button-badge .badge:hover {
-  background: #3f7d7aff;
-}
+/* --------------------------------------------- */
 
 /* Overview */
 .trailer {
@@ -484,7 +529,7 @@ body {
 }
 
 .trailer h1 {
-  text-shadow: 3px 2px 1px grey;
+  text-shadow: 3px 2px 1px #F4E3DBff;
   font-weight: 700;
   display: flex;
   flex-direction: row;
@@ -493,13 +538,14 @@ body {
 .trailer h1:after {
   content: "";
   flex: 1 1;
-  border-bottom: 2px solid #a7afb2;
+  border-bottom: 2px solid #BC8F8Bff;
   margin: 14px;
   margin-left: 10px;
 }
 
 .synopsis h1 {
   margin-bottom: 20px;
+  color: #BC8F8Bff;
 }
 
 .synopsis p {
@@ -509,7 +555,9 @@ body {
 
 .movie-info h1 {
   margin-bottom: 36px;
+  color: #BC8F8Bff;
 }
+/* ----------------------------------- */
 
 /* Character */
 .main-char {
@@ -542,6 +590,7 @@ body {
   font-size: 14px;
   text-align: center;
 }
+/* ----------------------------------------------------------- */
 
 /* Review */
 .content-badge {
