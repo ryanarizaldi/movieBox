@@ -26,7 +26,7 @@ class Overview extends Component {
   // };
 
     render() {
-      const { synopsis, release_date, director, featured_song, budget } = this.props.movie
+      const { synopsis, release_date, category, director, featured_song, budget } = this.props.movie
       // const { job, name } = this.state.crews;
       //const { crews } = this.state;
 
@@ -34,7 +34,7 @@ class Overview extends Component {
           <div className="trailer">
             <div className="synopsis">
               <h1>Synopsis</h1>
-              <p>{ synopsis }</p>
+              <p>{synopsis ? synopsis : "Not Found"}</p>
             </div>
 
             <div className="movie-info">
@@ -43,20 +43,27 @@ class Overview extends Component {
                 <Col lg="2">
                   <b>Release Date</b>
                 </Col>
-                <Col lg="10">: {release_date} </Col>
+                <Col lg="10">: {release_date ? release_date : "Not Found"} </Col>
+
                 <Col lg="2">
                   <b>Director</b>
                 </Col>
-                <Col lg="10">: {director} </Col>
-                
+                <Col lg="10">: {director ? director : "Not Found"} </Col>
+
+                <Col lg="2">
+                  <b>Category</b>
+                </Col>
+                <Col lg="10">: {category ? category : "Not Found"} </Col>
+
                 <Col lg="2">
                   <b>Featured Song</b>
                 </Col>
-                <Col lg="10">: {featured_song} </Col>
+                <Col lg="10">: {featured_song ? featured_song : "Song Not Found"} </Col>
+
                 <Col lg="2">
                   <b>Budget</b>
                 </Col>
-                <Col lg="10">: {budget} </Col>
+                <Col lg="10">: {budget ? budget : "Not Found"} </Col>
               </Row>
             </div>
           </div>

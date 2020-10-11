@@ -569,7 +569,7 @@ a#txt {
 }
 
 .character .row .col-md-2 .card {
-  width: 10rem;
+  width: 20rem;
   min-height: 2rem;
   padding: 0 auto;
 }
@@ -580,13 +580,13 @@ a#txt {
   object-fit: cover;
 }
 
-.character .row .col-md-2 .card .card-body p {
+/* .character .row .col-md-2 .card .card-body p {
   text-align: center;
   font-size: 14px;
-}
+} */
 
 .character .row .col-md-2 .card .card-body .card-title {
-  height: 2.5rem;
+  height: 1.5rem;
   font-size: 14px;
   text-align: center;
 }

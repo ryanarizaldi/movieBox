@@ -9,9 +9,7 @@ import Review from "./Review";
 
 class DetailMovie extends Component {
   state = {
-    movies: [],
-    active: 0,
-    detail: []
+    movies: []
   };
 
   componentDidMount = () => {
@@ -22,7 +20,7 @@ class DetailMovie extends Component {
       .then((response) => response.json())
       .then((json) => {
         this.setState({
-          movies: json.Movie,
+          movies: json.Movie
         });
       });
 
@@ -38,7 +36,6 @@ class DetailMovie extends Component {
 
   render() {
     const {
-      active,
       id,
       title,
       synopsis,
@@ -62,7 +59,7 @@ class DetailMovie extends Component {
             </div>
             <div className="content-detail">
               <h1>{title}</h1>
-              <h4>Rating: {rating}</h4>
+              <h4>Rating: {rating ? rating : "N/A"}</h4>
               <p>{synopsis}</p>
               <div className="button">
                 <Button>Watch trailer</Button>
