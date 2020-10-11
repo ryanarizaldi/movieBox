@@ -3,35 +3,53 @@ import { Container, Button, Row, Col, Card, Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import noimg from "../assets/img/noimg.png";
+import qs from "qs";
 
 export default class Categories extends Component {
   state = {
     movies: [],
-    option: 0,
-    active: 0,
-    genre: [],
+    option: "all",
+    active: "all",
+    // genre: [],
     currPage: 1,
     totRes: 0,
   };
 
   getMovie = async () => {
-    const {currPage} = this.state;
-    try {
-    const comeToPapa = await axios.get(`https://nameless-temple-74030.herokuapp.com/home/${currPage}`);
+    const {currPage, option} = this.state;
+    const body = qs.stringify({
+      category: option,
+    }); 
 
-    console.log(comeToPapa.data);
-    this.setState({
-      movies: comeToPapa.data.document,
-      totRes: comeToPapa.data.total_pages,
-    })
+    console.log(body);
+    try {
+
+      if (option === "all") {
+        const comeToPapa = await axios.get(`https://nameless-temple-74030.herokuapp.com/home/${currPage}`);
+        console.log(comeToPapa.data);
+        this.setState({
+          movies: comeToPapa.data.document,
+          totRes: comeToPapa.data.total_pages,
+        })
+      } else {
+        console.log("masuk categoy");
+        const comeToPapa = await axios.get(`https://nameless-temple-74030.herokuapp.com/movie/category/${option}`);
+
+        console.log(comeToPapa.data);
+        this.setState({
+          movies: comeToPapa.data,
+          totRes: comeToPapa.data.total_pages,
+        })
+      }
+
     } catch (error) {
-      console.log("error get movie", error);
+      console.log("error get movie", error.response);
     }
   }
 
   componentDidMount = () => {
     this.getMovie();
-    this.getGenre();
+    // this.getGenre();
   };
 // get movie yg lama
   // getMovie = () => {
@@ -50,9 +68,9 @@ export default class Categories extends Component {
   //       });
   //   } else {
   //     console.log("masuk option custom");
-  //     fetch(
-  //       `https://api.themoviedb.org/3/discover/movie?api_key=0f4cb6189e20110c05e4b524ae7821ac&with_genres=${option}`
-  //     )
+      // fetch(
+      //   `https://api.themoviedb.org/3/discover/movie?api_key=0f4cb6189e20110c05e4b524ae7821ac&with_genres=${option}`
+      // )
   //       .then((response) => response.json())
   //       .then((json) => {
   //         this.setState({
@@ -72,25 +90,25 @@ export default class Categories extends Component {
     }
   };
 
-  genre = (num) => {
+  genre = (genre) => {
     this.setState({
-      option: num,
-      active: num,
+      option: genre,
+      active: genre,
       currPage: 1,
     });
   };
 
-  getGenre = () => {
-    fetch(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=0f4cb6189e20110c05e4b524ae7821ac`
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({
-          genre: json.genres,
-        });
-      });
-  };
+  // getGenre = () => {
+  //   fetch(
+  //     `https://api.themoviedb.org/3/genre/movie/list?api_key=0f4cb6189e20110c05e4b524ae7821ac`
+  //   )
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //       this.setState({
+  //         genre: json.genres,
+  //       });
+  //     });
+  // };
 
     paginate = async (pageNum) => {
       try {
@@ -140,19 +158,65 @@ export default class Categories extends Component {
         <div className="show-by">
           <h1>Show by Genre</h1>
           <Button
-            onClick={() => this.genre(0)}
-            className={active === 0 ? `aktip` : ""}
+            onClick={() => this.genre("all")}
+            className={active === "all" ? `aktip` : ""}
           >
-            Popular
+            All Genre
           </Button>
-          {this.state.genre.map((gen) => (
-            <Button
-              className={active === gen.id ? `aktip` : ""}
-              onClick={() => this.genre(gen.id)}
-            >
-              {gen.name}
-            </Button>
-          ))}
+          <Button
+            onClick={() => this.genre("Action")}
+            className={active === "Action" ? `aktip` : ""}
+          >
+            Action
+          </Button>
+          <Button
+            onClick={() => this.genre("Drama")}
+            className={active === "Drama" ? `aktip` : ""}
+          >
+            Drama
+          </Button>
+          <Button
+            onClick={() => this.genre("Comedy")}
+            className={active === "Comedy" ? `aktip` : ""}
+          >
+            Comedy
+          </Button>
+          <Button
+            onClick={() => this.genre("Musical")}
+            className={active === "Musical" ? `aktip` : ""}
+          >
+            Musical
+          </Button>
+          <Button
+            onClick={() => this.genre("Horror")}
+            className={active === "Horror" ? `aktip` : ""}
+          >
+            Horror
+          </Button>
+          <Button
+            onClick={() => this.genre("Western")}
+            className={active === "Western" ? `aktip` : ""}
+          >
+            Western
+          </Button>
+          <Button
+            onClick={() => this.genre("History")}
+            className={active === "History" ? `aktip` : ""}
+          >
+            History
+          </Button>
+          <Button
+            onClick={() => this.genre("Fantasy")}
+            className={active === "Fantasy" ? `aktip` : ""}
+          >
+            Fantasy
+          </Button>
+          <Button
+            onClick={() => this.genre("Animation")}
+            className={active === "Animation" ? `aktip` : ""}
+          >
+            Animation
+          </Button>
         </div>
         <div className="movie-by-genre">
           <Row>
