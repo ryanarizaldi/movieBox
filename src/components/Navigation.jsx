@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import {
   Navbar,
-  Row,
+  // Row,
   Nav,
   Container,
   Form,
   FormControl,
   Button,
   Modal,
-  Col,
+  // Col,
   Image,
 } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
@@ -17,19 +17,19 @@ import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
 import logo from "../assets/img/moviebox.png";
-import { css } from "@emotion/core";
-import { RotateLoader } from "react-spinners/ClipLoader";
+// import { css } from "@emotion/core";
+// import { RotateLoader } from "react-spinners/ClipLoader";
 import qs from "qs";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 
 
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
-`;
+// const override = css`
+//   display: block;
+//   margin: 0 auto;
+//   border-color: red;
+// `;
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -144,10 +144,15 @@ class Navigation extends Component {
       this.handleCloseLogin();
       const username = submit.data.User.username;
       Swal.fire({
-        title: "Login Success",
-        text: `Welcome ${username}`,
-        icon: "success",
-      });
+        position: 'top-mid',
+        icon: 'success',
+        title: `Welcome ${username}`,
+        showConfirmButton: false,
+        timer: 1500
+      }).then(function(){ 
+        window.location.reload();
+        })
+      // window.location.reload(false)
     } catch (error) {
       console.log("error ini", error.response);
       this.setState({
@@ -212,7 +217,9 @@ class Navigation extends Component {
         title: "Sign up Success",
         text: "No need to Login. Enjoy our app",
         icon: "success",
-      });
+      }).then(function(){ 
+        window.location.reload();
+        });
     } catch (error) {
       console.log("error", error.response);
       this.setState({
@@ -253,6 +260,7 @@ class Navigation extends Component {
           password: "",
           token: null,
         });
+        window.location.reload();
       }
     });
   };
@@ -302,7 +310,7 @@ class Navigation extends Component {
   };
 
   render() {
-    const { token, loading, searchInput, userLogin } = this.state;
+    const { token, loading, searchInput} = this.state;
     // const usernameLog = this.state.dataLoggedIn.username;
 
     return (
@@ -519,16 +527,13 @@ class Navigation extends Component {
                       className="invalid-feedback"
                     />
                   </Form.Group>
-                  <Row>
-                    <Col md={10} >
+                  
                       <p>
                         Already have an Account?{" "}
-                        <a id="txt" href="#" onClick={this.openLogin}>
+                        <span id="txt" onClick={this.openLogin}>
                           Login
-                        </a>
+                        </span>
                       </p>
-                    </Col>
-                    <Col>
                       <Button
                         variant="primary"
                         type="submit"
@@ -536,8 +541,6 @@ class Navigation extends Component {
                       >
                         {loading ? "Loading... " : "Submit"}
                       </Button>
-                    </Col>
-                  </Row>
                 </Form>
               )}
             </Formik>
@@ -616,9 +619,9 @@ class Navigation extends Component {
 
                   <p>
                     Dont have an account yet?{" "}
-                    <a id="txt" href="#" onClick={this.openSign}>
+                    <span id="txt" onClick={this.openSign}>
                       Sign up
-                    </a>
+                    </span>
                   </p>
                   <Button variant="primary" type="submit" disabled={loading}>
                     {loading ? "please wait..." : "Submit"}

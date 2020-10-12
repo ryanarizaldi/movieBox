@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import { BrowserRouter as Router, Switch, Route, Link, NavLink } from "react-router-dom";
-import { Container, Image, Button, Badge } from "react-bootstrap";
-import ReactStars from "react-rating-stars-component";
+import { BrowserRouter as  Switch, Route, NavLink } from "react-router-dom";
+import { Container, Image, Button } from "react-bootstrap";
+// import ReactStars from "react-rating-stars-component";
 import Overview from "./Overview";
 import Character from "./Character";
 import Review from "./Review";
@@ -39,9 +39,8 @@ class DetailMovie extends Component {
       id,
       title,
       synopsis,
-      trailer,
       poster,
-      backdrop,
+      // backdrop,
       rating
     } = this.state.movies;
     // const id = this.state;
@@ -95,27 +94,20 @@ class DetailMovie extends Component {
               </NavLink>
             </div>
 
-            <Switch>
+         
               <Route
-                path={trailer}
-                exact
-              />
-              <Route
-                path={`/detail/${id}/overview`}
-                exact
+                path={`/detail/:id?/overview`}
                 component={() => <Overview movie={this.state.movies} />}
               />
               <Route
-                path={`/detail/${id}/character`}
-                exact
+                path={`/detail/:id?/character`}
                 component={() => <Character movie={this.state.movies} />}
               />
               <Route
-                path={`/detail/${id}/review`}
-                exact
+                path={`/detail/:id?/review`}
                 component={() => <Review movie={this.state.movies} />}
               />
-            </Switch>
+            
           </div>
         </Container>
       </div>
