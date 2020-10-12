@@ -3,20 +3,17 @@ import axios from "axios";
 import { Row, Col, InputGroup, FormControl, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import ReactStars from "react-rating-stars-component";
+import qs from "qs";
 
 export default class Review extends Component {
   state = {
     review: "",
     ratings: 0,
-    reviewee: [],
-    reviews: [
-      {
-        comments: "",
-        ratings: ""
-      }
-    ],
+    // reviewee: [],
+    reviews: [],
     token: localStorage.getItem("login"),
-    username: localStorage.getItem("username")
+    username: localStorage.getItem("username"),
+    userid: localStorage.getItem("idUser")
   };
 
   // componentDidUpdate = (prevProps, prevState) => {
@@ -49,49 +46,66 @@ export default class Review extends Component {
     }
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     const id = this.props.movie.id;
-    const { review, ratings } = this.state;
-    axios
-      .post(`https://nameless-temple-74030.herokuapp.com/review/add/${id}`, {
-        method: "post",
-        data: {
-          "comment": review,
-          "rating": ratings
-        },
-        headers: {
-          "access_token": this.state.token,
-          "content-Type": "application/x-www-form-urlencoded",
-        },
+    const { review, ratings, token } = this.state;
+    if (review === "" || ratings === 0) {
+      Swal.fire({
+        position: 'top-mid',
+        icon: 'error',
+        title: `Rating and Review cannot be null!`,
+        showConfirmButton: false,
+        timer: 1500
       })
-      .then(response => {
-        console.log("response", response)
+    } else {
+      const body = qs.stringify({
+        comment: review,
+        rating: ratings
       })
-      .catch(error => {
-        console.log("error", error)
-      })
+  
+      try {
+        const postReview = await axios({
+            method: "post",
+            url: `https://nameless-temple-74030.herokuapp.com/review/add/${id}`,
+            data: body,
+            headers: {
+              "access_token": token,
+              "content-Type": "application/x-www-form-urlencoded",
+            },
+          });
+  
+          console.log(postReview.data);
+          Swal.fire({
+            position: 'top-mid',
+            icon: 'success',
+            title: `Added review`,
+            showConfirmButton: false,
+            timer: 15000
+          }).then(
+
+            window.location.reload()
+          )
+  
+  
+        
+      } catch (error) {
+        // console.log("review error", error.response.data.msg);
+        Swal.fire({
+          position: 'top-mid',
+            icon: 'error',
+            title: error.response.data.msg,
+            showConfirmButton: false,
+            timer: 1500
+        })
+      }
+    }
+  
+  }
       
-    // if (review === "") {
-    //   Swal.fire({
-    //     title: "Error!",
-    //     text: `you cant input empty string1`,
-    //     icon: "error",
-    //   });
-    // } else {
-    //   Swal.fire({
-    //     title: "Review Posted",
-    //     text: `you just input ${review} ${ratings} star!`,
-    //     icon: "success",
-    //   });
-    //   this.setState({
-    //     reviewee: [...reviewee, { id: 1, text: review, rate: ratings }],
-    //     review: "",
-    //     ratings: "",
-    //   });
-    //   console.log(reviewee)
-    // }
-  };
+  deleteReview = () => {
+
+  }
 
   handleStar = (rating) => {
     this.setState({ ratings: rating });
@@ -103,12 +117,12 @@ export default class Review extends Component {
 
 
   render() {
-    const { review, ratings, reviewee } = this.state;
-    const { reviews, token, username } = this.state;
+    const { review, ratings, reviews, token, username, userid} = this.state;
+    // const { reviews, token, username } = this.state;
 
     return (
       <div className="content-badge">
-        <div className="review">
+        <div className="review mt-5 mb-5">
         {token ? (
           <Row>
             <Col lg="12">
@@ -138,42 +152,29 @@ export default class Review extends Component {
             </Col>
 
               {reviews.length ? (
-                <Col>
+                <Col mb="5">
                   {reviews.reverse().map((review) => (
-                    <Col lg="12">
+                <div className="border" key={review.userId}> 
+                  <Col lg="10 mt-3" >
                       <b>{review.user ? review.user.fullname : "No user review"}</b>
-                      {/* <ReactStars size={20} value={review.rating ? review.rating : null} edit={false} /> */}
                       <p>{review.comment ? review.comment : "No review yet"}</p>
                       <p>Rating: {review.rating ? review.rating : "N/A"} </p>
                     </Col>
+                    {review.userId == userid && (
+                      <Button className="align-self-end" onClick={() => this.deleteReview()}>Delete</Button>
+                    )}
+                </div>
                   ))}
                 </Col>
               ) : "Review not found in this movie" }
             </Row>
           ) : "Login to add review of this movie"}
-
-          {/* {reviewee.map((rev) => (
-              <Col lg="12">
-                <b>Yudi Kaka</b>
-                <ReactStars size={20} value={rev.rate} edit={false} />
-                <p>{rev.text}</p>
-              </Col>
-            ))}
-
-            <Col lg="12">
-              <b>Yudi Kaka</b>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga
-                voluptas repellat delectus! Vero harum facilis dolore optio sunt
-                cupiditate tempora itaque, recusandae culpa, iure animi rerum
-                consequuntur ullam porro obcaecati.
-              </p>
-            </Col> */}
+{/* 
           <div className="load-more">
             <Button size="sm">
               Load More
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
     );

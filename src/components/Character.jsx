@@ -9,22 +9,6 @@ export default class Character extends Component {
     token: localStorage.getItem("login"),
   };
 
-  // componentDidMount = async () => {
-  //   try {
-  //     const id = this.props.movie.id;
-  //     const fetch = await axios.get(
-  //       `https://nameless-temple-74030.herokuapp.com/moviechar/find/${id}`
-  //     );
-
-  //     console.log("fetch", fetch);
-  //     this.setState({
-  //       casts: fetch.data.characters,
-  //     });
-  //   } catch (error) {
-  //     console.log("error", error);
-  //   }
-  // };
-
   componentDidMount = () => {
     this.getChar()
   }
