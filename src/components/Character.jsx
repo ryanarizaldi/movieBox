@@ -64,7 +64,7 @@ export default class Character extends Component {
                   <Card>
                     <Card.Img
                       variant="top"
-                      src={char.image ? {`https://nameless-temple-74030.herokuapp.com/${char.image}`} : noimg}
+                      src={char.image ? char.image : noimg}
                     />
                     <Card.Body>
                       <Card.Title>{char.name ? char.name : "Unknown Artist"}</Card.Title>

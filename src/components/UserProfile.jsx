@@ -42,7 +42,7 @@ export default class UserProfile extends Component {
           <h1 className="mt-5 mb-5">User Profile</h1>
           <Row>
             <Col md={4}>
-              {image ? <Image src={`https://nameless-temple-74030.herokuapp.com/public/jurica-koletic-7YVZYZeITc8-unsplash.jpg`} alt="image profile" fluid /> : <Image src={imag} alt="image profile" fluid />
+              {image ? <Image src={`https://nameless-temple-74030.herokuapp.com/${image}`} alt="image profile" fluid /> : <Image src={imag} alt="image profile" fluid />
             }
             </Col>
             <Col>
