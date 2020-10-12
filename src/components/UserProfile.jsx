@@ -37,7 +37,7 @@ export default class UserProfile extends Component {
   render() {
     const { username, image, fullname, email } = this.state.dataUser;
     return (
-      <div>
+      <div className="user">
         <Container className="mb-5">
           <h1 className="mt-5 mb-5">User Profile</h1>
           <Row>
