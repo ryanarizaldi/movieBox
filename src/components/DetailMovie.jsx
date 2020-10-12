@@ -38,9 +38,10 @@ class DetailMovie extends Component {
     const {
       id,
       title,
+      trailer,
       synopsis,
       poster,
-      // backdrop,
+      backdrop,
       rating
     } = this.state.movies;
     // const id = this.state;
@@ -52,7 +53,7 @@ class DetailMovie extends Component {
           <div className="content">
             <div className="detail-img">
               <Image
-                src={poster}
+                src={backdrop}
                 fluid
               />
             </div>
@@ -61,7 +62,7 @@ class DetailMovie extends Component {
               <h4>Rating: {rating ? rating : "N/A"}</h4>
               <p>{synopsis}</p>
               <div className="button">
-                <Button>Watch trailer</Button>
+                <Button onClick={() => window.open(trailer)} >Watch Trailer</Button>
                 <Button>Add to Watchlist</Button>
               </div>
             </div>
@@ -94,7 +95,6 @@ class DetailMovie extends Component {
               </NavLink>
             </div>
 
-         
               <Route
                 path={`/detail/:id?/overview`}
                 component={() => <Overview movie={this.state.movies} />}

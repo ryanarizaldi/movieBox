@@ -130,7 +130,6 @@ export default class Review extends Component {
               <Button
                 className="send"
                 type="button"
-                variant="primary"
                 size="sm"
                 onClick={this.handleSubmit}
               >
@@ -171,7 +170,7 @@ export default class Review extends Component {
               </p>
             </Col> */}
           <div className="load-more">
-            <Button variant="primary" size="sm">
+            <Button size="sm">
               Load More
             </Button>
           </div>
