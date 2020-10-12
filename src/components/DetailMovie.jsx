@@ -53,7 +53,7 @@ class DetailMovie extends Component {
           <div className="content">
             <div className="detail-img">
               <Image
-                src={backdrop}
+                src={backdrop ? backdrop : poster}
                 fluid
               />
             </div>

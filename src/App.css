@@ -135,10 +135,17 @@ body {
   letter-spacing: 0.15em;
 }
 
-a#txt {
+span#txt {
   color: #BC8F8Bff;
   font-weight: 600;
+  cursor: pointer;
+  transition: 1200;
 }
+
+span#txt:hover {
+  transform: scale(1.1em);
+}
+
 
 .align-items-center p {
   margin-top: 10px;
@@ -294,6 +301,11 @@ a#txt {
   padding: 5px;
 }
 /* -------------------------------------------------------------------- */
+
+/* review */
+.border {
+  padding: 5px !important;
+}
 
 /* footer */
 .footer {
