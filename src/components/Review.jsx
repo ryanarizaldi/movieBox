@@ -154,8 +154,8 @@ export default class Review extends Component {
               {reviews.length ? (
                 <Col mb="5">
                   {reviews.reverse().map((review) => (
-                <div className="border"> 
-                  <Col lg="10 mt-3">
+                <div className="border" key={review.userId}> 
+                  <Col lg="10 mt-3" >
                       <b>{review.user ? review.user.fullname : "No user review"}</b>
                       <p>{review.comment ? review.comment : "No review yet"}</p>
                       <p>Rating: {review.rating ? review.rating : "N/A"} </p>
