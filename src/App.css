@@ -443,10 +443,10 @@ a#txt {
   /* min-height: 48rem;  */
 }
 
-.container .content .detail-img {
+/* .container .content .detail-img {
   width: 50%;
-  /* height: 33rem; */
-}
+  height: 33rem;
+} */
 
 .container .content .detail-img img {
   width: 100%;
@@ -461,8 +461,8 @@ a#txt {
   display: flex;
   flex-direction: column;
   text-align: justify;
-  margin-left: 58px;
-  width: 50%;
+  margin-left: 2rem;
+  /* width: 50%; */
   /* max-height: 34rem; */
   /* position: absolute;
   align-items: flex-start; */
@@ -484,18 +484,18 @@ a#txt {
 .button {
   display: flex;
   flex-direction: row;
-  margin-top: 48px;
+  margin-top: 2rem;
 }
 
 .button button {
   margin-right: 24px;
   letter-spacing: 0.1em;
-  background: #BC8F8Bff;
-  border-color: #BC8F8Bff;
+  background: none;
+  border: none;
 }
 
-.button button:hover {
-  background: #BC8F8Bff;
+.button button.btn-primary {
+  background-color: #BC8F8Bff;
   border-color: #BC8F8Bff;
 }
 
@@ -634,14 +634,19 @@ a#txt {
 .review button {
   letter-spacing: 0.1em;
   color: white;
-  background: #BC8F8Bff;
+  background: none;
+  border: none;
+}
+
+.review button.btn-primary {
+  background-color: #BC8F8Bff;
   border-color: #BC8F8Bff;
 }
 
-.review button:hover {
+/* .review button:hover {
   background: #BC8F8Bff;
   border-color: #BC8F8Bff;
-}
+} */
 
 .review .form-control {
   height: 100px;
@@ -659,4 +664,68 @@ a#txt {
   justify-content: center;
   margin-top: 2rem;
 }
+/* ----------------------------- */
+
+/* User Profile */
+.user {
+  letter-spacing: 0.1em;
+  color:  #28615Bff;
+}
+
+.user h1 {
+  font-weight: bold;
+}
+
+.user img {
+  width: 15rem;
+  height: auto;
+}
+
+.user a button {
+  background: none;
+  border: none;
+  letter-spacing: 0.1em;
+}
+
+.user a button.btn-primary {
+  background-color: #28615Bff;
+  border-color: #28615Bff;
+}
+/* ---------------------------------- */
+
+/* Edit User */
+.edit-user {
+  letter-spacing: 0.1em;
+  color:  #28615Bff;
+}
+
+.edit-user h1 {
+  font-weight: bold;
+}
+
+.edit-user img {
+  width: 15rem;
+  height: auto;
+}
+
+.edit-user label {
+  font-weight: bold;
+}
+
+.edit-user button {
+  background: none;
+  border: none;
+  letter-spacing: 0.1em;
+}
+
+.edit-user button.btn-primary {
+  background-color: #28615Bff;
+  border-color: #28615Bff;
+}
+
+.edit-user button.btn-danger {
+  background-color: #28615Bff;
+  border-color: #28615Bff;
+}
+
 
