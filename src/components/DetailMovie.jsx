@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import { BrowserRouter as Router, Switch, Route, Link, NavLink } from "react-router-dom";
-import { Container, Image, Button, Badge } from "react-bootstrap";
-import ReactStars from "react-rating-stars-component";
+import { BrowserRouter as  Switch, Route, NavLink } from "react-router-dom";
+import { Container, Image, Button } from "react-bootstrap";
+// import ReactStars from "react-rating-stars-component";
 import Overview from "./Overview";
 import Character from "./Character";
 import Review from "./Review";
@@ -41,7 +41,7 @@ class DetailMovie extends Component {
       synopsis,
       trailer,
       poster,
-      backdrop,
+      // backdrop,
       rating
     } = this.state.movies;
     // const id = this.state;

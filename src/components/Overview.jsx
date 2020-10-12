@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router";
 import { Row, Col } from "react-bootstrap";
-import axios from "axios";
+// import axios from "axios";
 
 class Overview extends Component {
   state = {

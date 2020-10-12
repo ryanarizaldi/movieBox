@@ -3,32 +3,32 @@ import {
   
   Container,
   Form,
-  FormControl,
+  // FormControl,
   Row,
   Button,
   Col,
   Image,
   Spinner,
 } from "react-bootstrap";
-import * as Yup from "yup";
+// import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const schema = Yup.object().shape({
-  password: Yup.string()
-    .min(5, "Password must be 5 characters at minimum")
-    .required("Password is required"),
-  fullname: Yup.string()
-    .required("Name is required"),
-  // username: Yup.string()
-  //   .required("Username is required"),
-});
+// const schema = Yup.object().shape({
+//   password: Yup.string()
+//     .min(5, "Password must be 5 characters at minimum")
+//     .required("Password is required"),
+//   fullname: Yup.string()
+//     .required("Name is required"),
+//   // username: Yup.string()
+//   //   .required("Username is required"),
+// });
 
 export default class FormEditUser extends Component {
   state = {
@@ -40,7 +40,7 @@ export default class FormEditUser extends Component {
     fullname:"",
     password:"",
     imagePre: {},
-    loading: false,
+    // loading: false,
 
     
   };
@@ -88,7 +88,7 @@ export default class FormEditUser extends Component {
   
   handleSubmit = async (e) => {
     e.preventDefault();
-    const {username, fullname, password, token, loading} = this.state;
+    const {username, fullname, password, token} = this.state;
     const image = this.state.imagePre.file;
     const email = this.state.dataUser.email;
     // console.log(username, fullname, password, email, image);

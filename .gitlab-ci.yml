@@ -16,7 +16,6 @@ build:
   script:
     - npm install
     - npm run build
-    - npm test
   except:
     - master
     - development
