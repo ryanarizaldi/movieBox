@@ -47,7 +47,6 @@ class DetailMovie extends Component {
             <div className="detail-img">
               <Image
                 src={poster}
-                fluid
               />
             </div>
             <div className="content-detail">

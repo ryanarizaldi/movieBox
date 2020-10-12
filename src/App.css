@@ -461,8 +461,8 @@ span#txt:hover {
 } */
 
 .container .content .detail-img img {
-  width: 100%;
-  height: auto;
+  width: 500px;
+  height: 500px;
   /* max-width: 33rem;
   max-height: 33rem; */
   object-fit: cover;

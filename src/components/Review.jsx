@@ -154,16 +154,16 @@ export default class Review extends Component {
               {reviews.length ? (
                 <Col mb="5">
                   {reviews.reverse().map((review) => (
-                <div className="border" key={review.userId}> 
-                  <Col lg="10 mt-3" >
-                      <b>{review.user ? review.user.fullname : "No user review"}</b>
-                      <p>{review.comment ? review.comment : "No review yet"}</p>
-                      <p>Rating: {review.rating ? review.rating : "N/A"} </p>
-                    </Col>
-                    {review.userId == userid && (
-                      <Button className="align-self-end" onClick={() => this.deleteReview()}>Delete</Button>
-                    )}
-                </div>
+                    <div className="border" key={review.userId}> 
+                      <Col lg="10 mt-3" >
+                          <b>{review.user ? review.user.fullname : "No user review"}</b>
+                          <p>{review.comment ? review.comment : "No review yet"}</p>
+                          <p>Rating: {review.rating ? review.rating : "N/A"} </p>
+                        </Col>
+                        {review.userId == userid && (
+                          <Button className="align-self-end" onClick={() => this.deleteReview()}>Delete</Button>
+                        )}
+                    </div>
                   ))}
                 </Col>
               ) : "Review not found in this movie" }
