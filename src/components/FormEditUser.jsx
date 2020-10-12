@@ -153,7 +153,20 @@ export default class FormEditUser extends Component {
   };
 
   goBack = () => {
-    window.history.back();
+    Swal.fire({
+      title: "Cancel?",
+      text: "All the changes you made are going to lost",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes !",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.history.back();
+        
+      }
+    })
   }
   render() {
     const { image, email } = this.state.dataUser;
@@ -198,7 +211,7 @@ export default class FormEditUser extends Component {
                     Profile Picture
                   </Form.Label>
                   <Col sm="6">
-                    <Form.Control type="file" placeholder="" onChange={(e) => this.handleFileUpload(e)}/>
+                    <Form.Control type="file" placeholder="" required onChange={(e) => this.handleFileUpload(e)}/>
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} controlId="formPlaintextPassword">

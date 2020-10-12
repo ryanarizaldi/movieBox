@@ -222,7 +222,7 @@ export default class Categories extends Component {
           <Row>
             {this.state.movies ? (
               this.state.movies.map((mov) => (
-                <Col md="3">
+                <Col md="3" key={mov.id}>
                   <Link to={`/detail/${mov.id}/overview`}>
                     <Card>
                       <Card.Img

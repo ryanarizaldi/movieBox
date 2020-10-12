@@ -25,7 +25,7 @@ export default class Hero extends Component {
       <>
         <Carousel>
           {this.state.movies.slice(0, 5).map((bg) => (
-            <Carousel.Item>
+            <Carousel.Item key={bg.id}>
               <img
                 className="d-block w-100 h-50"
                 src={`http://image.tmdb.org/t/p/original${bg.backdrop_path}`}

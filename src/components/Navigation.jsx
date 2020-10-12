@@ -527,16 +527,13 @@ class Navigation extends Component {
                       className="invalid-feedback"
                     />
                   </Form.Group>
-                  <Row>
-                    <Col md={10} >
+                  
                       <p>
                         Already have an Account?{" "}
                         <a id="txt" href="#" onClick={this.openLogin}>
                           Login
                         </a>
                       </p>
-                    </Col>
-                    <Col>
                       <Button
                         variant="primary"
                         type="submit"
@@ -544,8 +541,6 @@ class Navigation extends Component {
                       >
                         {loading ? "Loading... " : "Submit"}
                       </Button>
-                    </Col>
-                  </Row>
                 </Form>
               )}
             </Formik>
