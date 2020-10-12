@@ -243,6 +243,7 @@ a#txt {
   cursor: not-allowed;
   pointer-events: none;
   font-weight: bold;
+  color: white;
   background: #BC8F8Bff;
 }
 
@@ -422,7 +423,7 @@ a#txt {
 /* detail movie */
 .main-content {
   width: 100%;
-  height: 1400px;
+  height: 900px;
   letter-spacing: 0.1em;
   font-weight: 600;
 }
@@ -439,7 +440,7 @@ a#txt {
   position: relative;
   color: black;
   margin-top: 72px;
-  /* height: 26rem; */
+  /* min-height: 48rem;  */
 }
 
 .container .content .detail-img {
@@ -448,10 +449,10 @@ a#txt {
 }
 
 .container .content .detail-img img {
-  width: auto;
+  width: 100%;
   height: auto;
-  max-width: 33rem;
-  max-height: 33rem;
+  /* max-width: 33rem;
+  max-height: 33rem; */
   object-fit: cover;
   /* filter: brightness(50%); */
 }
@@ -465,6 +466,10 @@ a#txt {
   /* max-height: 34rem; */
   /* position: absolute;
   align-items: flex-start; */
+}
+
+.container .content-detail h1 {
+ color: #BC8F8Bff;
 }
 
 .container .content-detail h4 {
@@ -484,6 +489,7 @@ a#txt {
 .button button {
   margin-right: 24px;
   letter-spacing: 0.1em;
+  background: #BC8F8Bff;
 }
 
 .movie-badge {
@@ -520,8 +526,8 @@ a#txt {
 .movie-badge .button-badge .active {
   cursor: not-allowed;
   pointer-events: none;
-  font-weight: bold;
-  color: white;
+  font-weight: 700;
+  color: black;
   background: #BC8F8Bff;
 }
 /* --------------------------------------------- */
@@ -616,6 +622,12 @@ a#txt {
   margin-top: 10px;
 }
 
+.review button {
+  letter-spacing: 0.1em;
+  color: white;
+  background: #BC8F8Bff;
+}
+
 .review .form-control {
   height: 100px;
   margin-top: 10px;
@@ -632,3 +644,4 @@ a#txt {
   justify-content: center;
   margin-top: 320px;
 }
+
