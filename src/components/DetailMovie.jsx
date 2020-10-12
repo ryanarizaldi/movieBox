@@ -39,7 +39,6 @@ class DetailMovie extends Component {
       id,
       title,
       synopsis,
-      trailer,
       poster,
       // backdrop,
       rating
@@ -95,27 +94,20 @@ class DetailMovie extends Component {
               </NavLink>
             </div>
 
-            <Switch>
+         
               <Route
-                path={trailer}
-                exact
-              />
-              <Route
-                path={`/detail/${id}/overview`}
-                exact
+                path={`/detail/:id?/overview`}
                 component={() => <Overview movie={this.state.movies} />}
               />
               <Route
-                path={`/detail/${id}/character`}
-                exact
+                path={`/detail/:id?/character`}
                 component={() => <Character movie={this.state.movies} />}
               />
               <Route
-                path={`/detail/${id}/review`}
-                exact
+                path={`/detail/:id?/review`}
                 component={() => <Review movie={this.state.movies} />}
               />
-            </Switch>
+            
           </div>
         </Container>
       </div>
