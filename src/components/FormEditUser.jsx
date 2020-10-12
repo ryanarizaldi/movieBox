@@ -172,7 +172,7 @@ export default class FormEditUser extends Component {
     const { image, email } = this.state.dataUser;
     const { username, fullname, imagePre, loading } = this.state
     return (
-      <div>
+      <div className="edit-user">
         <Container className="mb-5">
           <h1 className="mt-5 mb-5">Edit User Profile</h1>
             <Row>
