@@ -27,13 +27,6 @@ class DetailMovie extends Component {
     console.log(this.props);
   };
 
-  // overview = (id) => {
-  //   this.props.history.push({
-  //     pathname: '/overview',
-  //     state: { id }
-  //   })
-  // }
-
   render() {
     const {
       id,
@@ -53,13 +46,13 @@ class DetailMovie extends Component {
           <div className="content">
             <div className="detail-img">
               <Image
-                src={backdrop ? backdrop : poster}
+                src={poster}
                 fluid
               />
             </div>
             <div className="content-detail">
               <h1>{title}</h1>
-              <h4>Rating: {rating ? rating : "N/A"}</h4>
+              <h4>Rating: {rating ? Math.round(rating): "N/A"}</h4>
               <p>{synopsis}</p>
               <div className="button">
                 <Button onClick={() => window.open(trailer)} >Watch Trailer</Button>
